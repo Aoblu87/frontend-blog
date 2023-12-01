@@ -1,3 +1,6 @@
+import { useState } from "react";
+import ReactQuill from "react-quill";
+
 export default function NewPost() {
   return (
     <>
@@ -50,6 +53,19 @@ export default function NewPost() {
               type="file"
               className="file-input file-input-bordered w-full max-w-xs"
             />
+          </label>
+          <label className="form-control w-full max-w-xs">
+            <div className="label">
+              <span className="label-text">Read time</span>
+            </div>
+            <select className="select select-bordered select-xs w-full max-w-xs">
+              <option disabled selected>
+                Minute
+              </option>
+              <option>1</option>
+              <option>2</option>
+              <option>3</option>
+            </select>
           </label>
         </div>
       </dialog>

@@ -4,8 +4,8 @@ export default function MyNavbar() {
   return (
     <>
       <div className="navbar bg-base-100 mb-5">
-        <div className="flex-1 justify-center">
-          <a className="btn btn-ghost text-xl">daisyUI</a>
+        <div className="flex-1 ">
+          <a className="btn btn-ghost text-xl">Blog</a>
         </div>
         <div className="col me-5">
           <NewPost />
