@@ -33,8 +33,8 @@ export default function MyNavbar(props) {
           <NewPost />
         </div>
         <div className="flex-none gap-2">
-          <form onSubmit={handleSearch}>
-            <div className="form-control">
+          <form onSubmit={handleSearch} className="flex flex-wrap">
+            <div className="form-control column-4">
               <input
                 type="text"
                 value={query}
