@@ -28,9 +28,9 @@ export default function BlogList(props) {
   }, []);
   return (
     <>
-      <div className="grid grid-cols-3 gap-6 ">
+      <div className="flex flex-col md:flex-wrap md:flex-row ">
         {loading ? (
-          <div className="d-flex mt-5">
+          <div className="flex mt-5">
             <span className="loading loading-spinner text-info"></span>
           </div>
         ) : result ? (
