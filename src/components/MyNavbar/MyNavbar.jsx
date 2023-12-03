@@ -7,7 +7,9 @@ export default function MyNavbar(props) {
     e.preventDefault();
     try {
       const response = await fetch(
-        `http://localhost:3030/api/searchPost?title=${query}`
+        `http://localhost:${
+          import.meta.env.VITE_MY_PORT
+        }/api/searchPost?title=${query}`
       );
 
       if (!response.ok) {
