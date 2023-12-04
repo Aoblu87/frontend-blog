@@ -1,7 +1,8 @@
-import { BrowserRouter } from "react-router-dom";
-import Footer from "./components/Footer/Footer";
-import Home from "./components/Home/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import MyNavbar from "./components/MyNavbar/MyNavbar";
+import Home from "./components/Home/Home";
+import Blog from "./components/Blog/Blog";
+import Footer from "./components/Footer/Footer";
 import { useState } from "react";
 export default function App() {
   const [query, setQuery] = useState("");
@@ -10,12 +11,11 @@ export default function App() {
     <>
       <BrowserRouter>
         <MyNavbar query={query} setQuery={setQuery} setResult={setResult} />
-        <Home result={result} />
-        <Footer />
-        {/* <Routes>
-          <Route path="/" exact element={<Home result={result} />} />
+        <Routes>
+          <Route path="/" element={<Home result={result} />} />
           <Route path="/blog/:id" element={<Blog />} />
-        </Routes> */}
+        </Routes>
+        <Footer />
       </BrowserRouter>
     </>
   );

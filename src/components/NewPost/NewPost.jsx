@@ -120,9 +120,7 @@ export default function NewPost() {
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
               >
-                <option disabled selected>
-                  Pick one
-                </option>
+                <option>Pick one</option>
                 <option>Software</option>
                 <option>Job's Interviews</option>
                 <option>AI </option>
@@ -149,9 +147,7 @@ export default function NewPost() {
                 value={readTime}
                 onChange={(e) => setReadTime(e.target.value)}
               >
-                <option disabled selected>
-                  Minute
-                </option>
+                <option>Minute</option>
                 <option value="1">1 minute</option>
                 <option value="2">2 minute</option>
                 <option value="3">3 minute</option>
