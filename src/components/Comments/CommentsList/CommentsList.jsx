@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 export default function CommentList(props) {
   const { id } = props;
-  const [comments, setComments] = useState();
+  const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const getComments = async () => {
@@ -29,48 +29,48 @@ export default function CommentList(props) {
   useEffect(() => {
     getComments();
   }, []);
-
   console.log(comments);
   return (
     <>
-      <div className="flex flex-col md:flex-row justify-between">
+      <div className="flex flex-col  justify-between">
         {loading ? (
           <div className="flex mt-5">
             <span className="loading loading-spinner text-info"></span>
           </div>
         ) : (
           comments.comments.map((comment, i) => (
-            <div
-              key={`item-${i}`}
-              className="flex flex-col md:flex-row justify-between"
-            >
-              <div className="flex flex-row">
-                <div className="avatar">
-                  <div className="w-24 rounded-full">
-                    <img src={comment.author.avatar} />
+            <>
+              <div
+                key={`item-${i}`}
+                className="flex flex-col md:flex-row justify-between"
+              >
+                <div className="flex flex-row">
+                  <div className="avatar">
+                    <div className="w-24 rounded-full">
+                      <img src={comment.author.avatar} />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col p-3">
+                    <div className="author mb-3">
+                      <h5>
+                        {comment.author.firstName}
+
+                        {comment.author.lastName}
+                      </h5>
+                    </div>
+                    <div className="comments">
+                      <p>{comment.text}</p>
+                    </div>
                   </div>
                 </div>
-
-                <div className="flex flex-col p-3">
-                  <div className="author mb-3">
-                    <h5>
-                      {comment.author.firstName}
-
-                      {comment.author.lastName}
-                    </h5>
-                  </div>
-                  <div className="comments">
-                    <p>{comment.text}</p>
-                  </div>
-                </div>
+                <div className="date p-3">25 Gennaio 2023</div>
               </div>
-              <div className="date p-3"></div>
-            </div>
+              <div className="divider"></div>
+            </>
           ))
         )}
       </div>
-
-      <div className="divider"></div>
     </>
   );
 }

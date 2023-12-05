@@ -37,42 +37,41 @@ export default function Blog() {
     </div>
   ) : (
     <>
-      <div>
-        <div className="container mx-auto">
-          <img src={blog.cover} />
-          <h1>{blog.title}</h1>
+      <div className="container mx-auto my-5">
+        <img src={blog.cover} />
+        <h1>{blog.title}</h1>
 
-          <div className="blog-details-container">
-            <div className="blog-details-author">
-              <div xs={"auto"} className="pe-0" key={blog.author._id}>
-                <img className="blog-author" src={blog.author.avatar} />
-              </div>
-
-              <div className="d-flex align-items-center">
-                <h6>
-                  di {blog.author.firstName} {blog.author.lastName}
-                </h6>
-              </div>
+        <div className="blog-details-container">
+          <div className="blog-details-author">
+            <div xs={"auto"} className="pe-0" key={blog.author._id}>
+              <img className="blog-author" src={blog.author.avatar} />
             </div>
-            <div className="blog-details-info">
-              <div>{`lettura da ${blog.readTime.value} ${blog.readTime.unit}`}</div>
-              <div
-                style={{
-                  marginTop: 20,
-                }}
-              >
-                <BlogLike defaultLikes={["123"]} onChange={console.log} />
-              </div>
+
+            <div className="d-flex align-items-center">
+              <h6>
+                di {blog.author.firstName} {blog.author.lastName}
+              </h6>
             </div>
           </div>
-
-          <div
-            dangerouslySetInnerHTML={{
-              __html: blog.content,
-            }}
-          ></div>
+          <div className="blog-details-info">
+            <div>{`lettura da ${blog.readTime.value} ${blog.readTime.unit}`}</div>
+            <div
+              style={{
+                marginTop: 20,
+              }}
+            >
+              <BlogLike defaultLikes={["123"]} onChange={console.log} />
+            </div>
+          </div>
         </div>
+
+        <div
+          dangerouslySetInnerHTML={{
+            __html: blog.content,
+          }}
+        ></div>
       </div>
+
       <Comments id={id} />
     </>
   );
