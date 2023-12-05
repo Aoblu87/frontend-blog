@@ -39,7 +39,7 @@ export default function AddComments() {
                   type="radio"
                   name="rating-1"
                   className="mask mask-star"
-                  checked
+                  defaultChecked={true}
                 />
                 <input
                   type="radio"
@@ -62,6 +62,10 @@ export default function AddComments() {
               <textarea
                 className="textarea textarea-primary"
                 placeholder="Very interesting..."
+                type="text"
+                // required
+                // value={text}
+                // onChange={(e) => setComment(e.target.value)}
               ></textarea>
             </div>
           </div>

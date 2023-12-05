@@ -32,13 +32,13 @@ export default function CommentList(props) {
   console.log(comments);
   return (
     <>
-      <div className="flex flex-col  justify-between">
+      <div className="flex flex-col  justify-between" key={id}>
         {loading ? (
           <div className="flex mt-5">
             <span className="loading loading-spinner text-info"></span>
           </div>
         ) : (
-          comments.comments.map((comment, i) => (
+          comments.map((comment, i) => (
             <>
               <div
                 key={`item-${i}`}

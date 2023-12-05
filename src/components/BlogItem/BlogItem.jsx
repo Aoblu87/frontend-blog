@@ -5,9 +5,13 @@ export default function BlogItem(props) {
   return (
     <>
       <Link to={`/blog/${_id}`} className="blog-link">
-        <div className="card w-96 h-70 bg-base-100 shadow-xl p-2 mx-3">
+        <div className="card w-96 h-70 bg-base-100 shadow-xl p-2 mx-3 mb-5">
           <figure>
-            <img src={cover} alt={title} />
+            <img
+              src={cover}
+              alt={title}
+              className="aspect-square object-cover"
+            />
           </figure>
           <div className="card-body">
             <h2 className="card-title">{title}</h2>

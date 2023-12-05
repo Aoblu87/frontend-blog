@@ -2,7 +2,7 @@ import cn from "classnames";
 import "react-quill/dist/quill.snow.css";
 import TextEditor from "../TextEditor";
 import styles from "./styles.module.scss";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import { toast } from "react-toastify";
 
@@ -20,6 +20,11 @@ export default function NewPost() {
     setText(value);
   });
 
+  useEffect(() => {
+    setBlog((c) => ({
+      ...c,
+    }));
+  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -67,6 +72,7 @@ export default function NewPost() {
       console.log("Error fetching data:", error);
     }
   };
+
   return (
     <>
       {/* You can open the modal using document.getElementById('ID').showModal() method */}

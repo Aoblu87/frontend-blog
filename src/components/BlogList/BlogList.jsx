@@ -37,7 +37,7 @@ export default function BlogList(props) {
           </div>
         ) : result ? (
           result.map((post, i) => (
-            <div key={`item-${i}`}>
+            <div key={`item-${i}`} className="flex">
               <BlogItem key={post.title} {...post} loading={loading} />
             </div>
           ))
