@@ -1,10 +1,10 @@
 import cn from "classnames";
+import { useCallback, useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import TextEditor from "../TextEditor";
 import styles from "./styles.module.scss";
-import { useCallback, useEffect, useState } from "react";
-import "react-toastify/dist/ReactToastify.css";
-import { toast } from "react-toastify";
 
 export default function NewPost() {
   const [text, setText] = useState("");
@@ -13,18 +13,48 @@ export default function NewPost() {
   const [title, setTitle] = useState("");
   const [idAuthor, setIdAuthor] = useState("");
   const [category, setCategory] = useState("");
-  // const [cover, setCover] = useState(new FormData()); //FormData e' una classe usata per raccogliere dati non stringa dai form
+  const [cover, setCover] = useState(new FormData()); //FormData e' una classe usata per raccogliere dati non stringa dai form
+  //E' formata da coppie chiave/valore => ["post", File], ["exp", File]
   const [readTime, setReadTime] = useState("");
 
+  // PER SETTARE STATO COVER
+  const handleFile = (e) => {
+    setCover((prev) => {
+      //per cambiare i formData, bisogna "appendere" una nuova coppia chiave/valore, usando il metodo .append()
+      prev.delete("cover"); //ricordatevi di svuotare il FormData prima :)
+      prev.append("cover", e.target.files[0]); //L'API richiede un "nome" diverso per ogni rotta, per caricare un'immagine ad un post, nel form data andra' inserito un valore con nome "post"
+      return prev;
+    });
+  };
+  // PATCH per aggiungere COVER
+  const addFile = async () => {
+    try {
+      let response = await fetch(
+        `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts/${id}`,
+        {
+          method: "PATCH",
+          body: cover, //non serve JSON.stringify
+        }
+      );
+      if (response.ok) {
+        let photo = await response.json();
+        setCover(photo);
+      } else {
+        console.log("error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  useEffect(() => {
+    addFile();
+  }, []);
+
+  // Controllo cambiamento nella text area
   const handleChange = useCallback((value) => {
     setText(value);
   });
 
-  useEffect(() => {
-    setBlog((c) => ({
-      ...c,
-    }));
-  }, []);
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -38,7 +68,7 @@ export default function NewPost() {
 
       category: category,
       title: title,
-      // cover,
+      cover: cover,
       content: text,
     };
 
@@ -49,6 +79,7 @@ export default function NewPost() {
         },
         method: "POST",
         body: JSON.stringify(formData),
+        cover,
         // cover,
       })
         .then(function (response) {
@@ -72,6 +103,12 @@ export default function NewPost() {
       console.log("Error fetching data:", error);
     }
   };
+  useEffect(() => {
+    setBlog((c) => ({
+      ...c,
+    }));
+  }, []);
+  console.log(blog);
 
   return (
     <>
@@ -86,9 +123,10 @@ export default function NewPost() {
         <div className="modal-box max-h-fit">
           <form method="dialog" onSubmit={handleSubmit}>
             {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">
               ✕
             </button>
+
             <h3 className="font-bold text-lg flex justify-center">New Post</h3>
             <label className="form-control w-full max-w-[100%] mb-3">
               <div className="label">
@@ -141,6 +179,7 @@ export default function NewPost() {
               <input
                 type="file"
                 className="file-input file-input-bordered w-full max-w-[100%] mb-3"
+                onChange={handleFile}
               />
             </label>
             <label className="form-control w-full max-w-[100%] mb-3">
