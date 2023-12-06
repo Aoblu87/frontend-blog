@@ -1,7 +1,7 @@
 import cn from "classnames";
 import { useCallback, useEffect, useState } from "react";
 import "react-quill/dist/quill.snow.css";
-import { toast } from "react-toastify";
+import { ToastContainer, toast, useToast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextEditor from "../TextEditor";
 import styles from "./styles.module.scss";
@@ -13,52 +13,38 @@ export default function NewPost() {
   const [title, setTitle] = useState("");
   const [idAuthor, setIdAuthor] = useState("");
   const [category, setCategory] = useState("");
-  const [cover, setCover] = useState(new FormData()); //FormData e' una classe usata per raccogliere dati non stringa dai form
-  //E' formata da coppie chiave/valore => ["post", File], ["exp", File]
+  const [cover, setCover] = useState(null);
   const [readTime, setReadTime] = useState("");
+  const [posts, setPosts] = useState([]);
 
-  // PER SETTARE STATO COVER
-  const handleFile = (e) => {
-    setCover((prev) => {
-      //per cambiare i formData, bisogna "appendere" una nuova coppia chiave/valore, usando il metodo .append()
-      prev.delete("cover"); //ricordatevi di svuotare il FormData prima :)
-      prev.append("cover", e.target.files[0]); //L'API richiede un "nome" diverso per ogni rotta, per caricare un'immagine ad un post, nel form data andra' inserito un valore con nome "post"
-      return prev;
-    });
-  };
-  // PATCH per aggiungere COVER
-  const addFile = async () => {
+  const getPosts = async () => {
     try {
-      let response = await fetch(
-        `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts/${id}`,
-        {
-          method: "PATCH",
-          body: cover, //non serve JSON.stringify
-        }
+      const response = await fetch(
+        `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts`
       );
-      if (response.ok) {
-        let photo = await response.json();
-        setCover(photo);
-      } else {
-        console.log("error");
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
       }
+
+      const data = await response.json();
+      setPosts(data);
     } catch (error) {
-      console.log(error);
+      console.error("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
   };
-  useEffect(() => {
-    addFile();
-  }, []);
 
   // Controllo cambiamento nella text area
   const handleChange = useCallback((value) => {
     setText(value);
   });
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const formData = {
+    const textData = {
       readTime: {
         value: readTime,
       },
@@ -68,47 +54,55 @@ export default function NewPost() {
 
       category: category,
       title: title,
-      cover: cover,
+
       content: text,
     };
+    const formData = new FormData();
+    formData.append("cover", cover);
 
     try {
-      fetch(`http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts/`, {
-        headers: {
-          "Content-Type": "application/json",
-        },
-        method: "POST",
-        body: JSON.stringify(formData),
-        cover,
-        // cover,
-      })
-        .then(function (response) {
-          if (response.ok) {
-            toast.success("Comment saved successfully!", {
-              position: toast.POSITION.BOTTOM_RIGHT,
-            });
-          } else {
-            toast.error("Something went wrong!", {
-              position: toast.POSITION.TOP_LEFT,
-            });
-            throw new Error(`HTTP error! Status: ${response.status}`);
+      // Fetch POST per aggiungere BlogPOST
+      const textResponse = await fetch(
+        `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts/`,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+          method: "POST",
+          body: JSON.stringify(textData),
+        }
+      );
+      if (textResponse.ok) {
+        const textDataResponse = await textResponse.json();
+        const { _id } = textDataResponse;
+        console.log(textDataResponse);
+        // fetch PATCH per aggiungere Cover
+        const fileResponse = await fetch(
+          `http://localhost:${
+            import.meta.env.VITE_MY_PORT
+          }/api/blogPosts/${_id}/cover`,
+          {
+            method: "PATCH",
+            body: formData,
           }
-        })
-
-        .then(setBlog(formData))
-        .finally(() => {
-          setLoading(false);
+        );
+      }
+      if (fileResponse.ok) {
+        const fileDataResponse = await fileResponse.json();
+        console.log(fileDataResponse);
+        useToast.success("Comment saved successfully!", {
+          position: toast.POSITION.BOTTOM_RIGHT,
         });
+      } else {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
     } catch (error) {
       console.log("Error fetching data:", error);
+    } finally {
+      setLoading(false);
     }
+    // getPosts();
   };
-  useEffect(() => {
-    setBlog((c) => ({
-      ...c,
-    }));
-  }, []);
-  console.log(blog);
 
   return (
     <>
@@ -122,11 +116,6 @@ export default function NewPost() {
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box max-h-fit">
           <form method="dialog" onSubmit={handleSubmit}>
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 ">
-              ✕
-            </button>
-
             <h3 className="font-bold text-lg flex justify-center">New Post</h3>
             <label className="form-control w-full max-w-[100%] mb-3">
               <div className="label">
@@ -179,7 +168,9 @@ export default function NewPost() {
               <input
                 type="file"
                 className="file-input file-input-bordered w-full max-w-[100%] mb-3"
-                onChange={handleFile}
+                multiple={false}
+                // onChange={handleFile}
+                onChange={(e) => setCover(e.target.files[0])}
               />
             </label>
             <label className="form-control w-full max-w-[100%] mb-3">
@@ -222,6 +213,7 @@ export default function NewPost() {
               </button>
             </div>
           </form>
+          <ToastContainer />
         </div>
       </dialog>
     </>
