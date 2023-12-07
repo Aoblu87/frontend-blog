@@ -28,6 +28,7 @@ export default function BlogList(props) {
   useEffect(() => {
     getPosts();
   }, []);
+  console.log(posts);
   return (
     <>
       <div className="flex flex-col md:flex-wrap md:flex-row ">

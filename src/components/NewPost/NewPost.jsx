@@ -5,6 +5,7 @@ import { ToastContainer, toast, useToast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextEditor from "../TextEditor";
 import styles from "./styles.module.scss";
+import { Link } from "react-router-dom";
 
 export default function NewPost() {
   const [text, setText] = useState("");
@@ -117,6 +118,12 @@ export default function NewPost() {
         <div className="modal-box max-h-fit">
           <form method="dialog" onSubmit={handleSubmit}>
             <h3 className="font-bold text-lg flex justify-center">New Post</h3>
+            <button
+              className="btn"
+              onClick={() => document.getElementById("my_modal_3").close()}
+            >
+              X
+            </button>
             <label className="form-control w-full max-w-[100%] mb-3">
               <div className="label">
                 <span className="label-text font-bold">Author ID</span>
@@ -209,7 +216,7 @@ export default function NewPost() {
             </label>
             <div className="flex justify-end my-5 ">
               <button className="btn btn-success " type="submit">
-                Send
+                <Link to={"/"}>Send</Link>
               </button>
             </div>
           </form>
