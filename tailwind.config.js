@@ -1,5 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
+  important: true,
+  // Active dark mode on class basis
+  darkMode: "class",
+  i18n: {
+    locales: ["en-US"],
+    defaultLocale: "en-US",
+  },
+
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {},

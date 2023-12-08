@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import NewPost from "../NewPost/NewPost";
+import SignUp from "../Sign up/SignUp";
 
 export default function MyNavbar(props) {
   const { query, setQuery, setResult } = props;
@@ -78,10 +79,20 @@ export default function MyNavbar(props) {
             </div>
             <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
               <li>
-                <a className="justify-between">
-                  Profile
-                  <span className="badge">New</span>
-                </a>
+                Profile
+                {/* You can open the modal using document.getElementById('ID').showModal() method */}
+                <button
+                  className="btn justify-between"
+                  onClick={() =>
+                    document.getElementById("signUp_modal").showModal()
+                  }
+                >
+                  Sign up/Sign in
+                </button>
+                <dialog id="signUp_modal" className="modal">
+                  <SignUp id={"signUp_modal"} />
+                </dialog>
+                <span className="badge">New</span>
               </li>
               <li>
                 <a>Settings</a>
