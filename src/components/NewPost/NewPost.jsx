@@ -18,24 +18,24 @@ export default function NewPost() {
   const [readTime, setReadTime] = useState("");
   const [posts, setPosts] = useState([]);
 
-  const getPosts = async () => {
-    try {
-      const response = await fetch(
-        `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts`
-      );
+  // const getPosts = async () => {
+  //   try {
+  //     const response = await fetch(
+  //       `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts`
+  //     );
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! Status: ${response.status}`);
-      }
+  //     if (!response.ok) {
+  //       throw new Error(`HTTP error! Status: ${response.status}`);
+  //     }
 
-      const data = await response.json();
-      setPosts(data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     const data = await response.json();
+  //     setPosts(data);
+  //   } catch (error) {
+  //     console.error("Error fetching data:", error);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   // Controllo cambiamento nella text area
   const handleChange = useCallback((value) => {

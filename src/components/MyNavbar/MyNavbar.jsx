@@ -78,22 +78,21 @@ export default function MyNavbar(props) {
               </div>
             </div>
             <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+              <li>Profile</li>
               <li>
-                Profile
-                {/* You can open the modal using document.getElementById('ID').showModal() method */}
                 <button
                   className="btn justify-between"
                   onClick={() =>
                     document.getElementById("signUp_modal").showModal()
                   }
                 >
-                  Sign up/Sign in
+                  Sign in
                 </button>
-                <dialog id="signUp_modal" className="modal">
+                <dialog id="signUp_modal" className="modal flex justify-center">
                   <SignUp id={"signUp_modal"} />
-                </dialog>
-                <span className="badge">New</span>
+                </dialog>{" "}
               </li>
+
               <li>
                 <a>Settings</a>
               </li>
