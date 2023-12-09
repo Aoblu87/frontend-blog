@@ -1,5 +1,6 @@
 import { useState } from "react"
-import SignIn from "../SignIn/SignIn"
+import Login from "../Login/Login"
+import ConfermationEmail from "../../ConfermationEmail/ConfermationEmail"
 
 export default function SignUp(props) {
     const { id } = props
@@ -10,10 +11,12 @@ export default function SignUp(props) {
     const [email, setEmail] = useState("")
     const [successfullRegistration, setSuccessfullRegistration] =
         useState(false)
+    const [emailExists, setEmailExists] = useState(false)
 
     const handleSubmit = async (e) => {
         e.preventDefault()
         // setLoading(true);
+        setEmailExists(false)
         const formData = {
             firstName: firstName,
 
@@ -46,22 +49,28 @@ export default function SignUp(props) {
             console.log(data)
         } catch (error) {
             console.log("Error fetching data:", error)
+        } finally {
+            setEmailExists(true)
+            // setLoading(false)
         }
-        // finally {
-        //     setLoading(false)
-        // }
     }
 
+    // Chiude il modale e porta gli stati al valore di default
+    const closeSignUp = () => {
+        setFirstName("")
+        setEmail("")
+        setLastName("")
+        setPassword("")
+        setSuccessfullRegistration(false)
+        setEmailExists(false)
+        document.getElementById("signUp_modal").close()
+    }
     return (
         <>
             <div className="flex flex-col max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
                 <div className="flex justify-end text-2xl">
-                    <button
-                        onClick={() => {
-                            document.getElementById("signUp_modal").close()
-                        }}
-                    >
-                        <i class="fa-solid fa-xmark"></i>
+                    <button onClick={closeSignUp}>
+                        <i className="fa-solid fa-xmark"></i>
                     </button>
                 </div>
                 <div className="self-center mb-2 text-xl font-light text-gray-800 sm:text-2xl dark:text-white">
@@ -73,14 +82,14 @@ export default function SignUp(props) {
                         target="_blank"
                         className="text-sm text-blue-500 underline hover:text-blue-700"
                         onClick={() => {
-                            document.getElementById("signIn_modal").showModal()
+                            document.getElementById("login_modal").showModal()
                             document.getElementById("signUp_modal").close()
                         }}
                     >
                         Sign in
                     </a>
-                    <dialog id="signIn_modal" className="modal">
-                        <SignIn id={"signIn_modal"} />
+                    <dialog id="login_modal" className="modal">
+                        <Login id={"login_modal"} />
                     </dialog>
                 </span>
                 <div className="p-6 mt-8">
@@ -158,45 +167,20 @@ export default function SignUp(props) {
                         <div></div>
                     </div>
                 </div>
-                {/* Alert success registration */}
+
+                {/* Alert success registration or email already exists */}
+
                 {successfullRegistration ? (
-                    <div class="w-64 p-4 m-auto bg-white shadow-lg rounded-2xl dark:bg-gray-800">
-                        <div class="w-full h-full text-center">
-                            <div class="flex flex-col justify-between h-full">
-                                <svg
-                                    class="w-12 h-12 m-auto mt-4 text-green-500"
-                                    stroke="currentColor"
-                                    fill="none"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <path
-                                        stroke-linecap="round"
-                                        stroke-linejoin="round"
-                                        stroke-width="2"
-                                        d="M5 13l4 4L19 7"
-                                    ></path>
-                                </svg>
-                                <h1>SUCCESS</h1>
-                                <p class="px-6 py-2 text-gray-600 dark:text-gray-100 text-md text-bolder">
-                                    We have sent a verification email to
-                                    <span class="font-bold text-gray-800 dark:text-white">
-                                        23722873
-                                    </span>
-                                    has been deleted form database.
-                                </p>
-                                <div class="flex items-center justify-between w-full gap-4 mt-8">
-                                    <button
-                                        type="button"
-                                        class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                                    >
-                                        Close
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    <ConfermationEmail
+                        email={email}
+                        closeSignUp={closeSignUp}
+                    />
                 ) : (
-                    <div></div>
+                    emailExists && (
+                        <div>
+                            <h3>Email already exists</h3>
+                        </div>
+                    )
                 )}
             </div>
         </>
