@@ -80,7 +80,7 @@ export default function SignUp(props) {
                     Already have an account ?
                     <a
                         target="_blank"
-                        className="text-sm text-blue-500 underline hover:text-blue-700"
+                        className="text-sm text-blue-500 underline hover:text-blue-700 hover:cursor-pointer"
                         onClick={() => {
                             document.getElementById("login_modal").showModal()
                             document.getElementById("signUp_modal").close()

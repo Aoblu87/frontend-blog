@@ -1,131 +1,197 @@
-import { Link } from "react-router-dom"
-import NewPost from "../NewPost/NewPost"
-import SignUp from "../MyNavbar/Sign up/SignUp"
 import { useState } from "react"
+import SignUp from "./Signup/SignUp"
+import NewPost from "./NewPost/NewPost"
 
 export default function MyNavbar(props) {
-    const { query, setQuery, setResult } = props
-
     const [login, setLogin] = useState(false)
 
-    const handleSearch = async (e) => {
-        e.preventDefault()
-        try {
-            const response = await fetch(
-                `http://localhost:${
-                    import.meta.env.VITE_MY_PORT
-                }/api/searchPost?title=${query}`
-            )
-
-            if (!response.ok) {
-                throw new Error(`Errore nella richiesta: ${response.status}`)
-            }
-
-            const data = await response.json()
-            console.log("Risultato della ricerca:", data)
-
-            // Aggiorna lo stato con i risultati della ricerca
-            setResult(data)
-        } catch (errore) {
-            console.error("Errore durante la ricerca:", errore.message)
-        }
-    }
     return (
         <>
-            <div className="navbar bg-base-100 mb-5 mx-auto">
-                <div className="flex-1 ">
-                    <Link to={"/"} className="btn btn-ghost text-xl">
-                        Blog
-                    </Link>
-                </div>
-                <div className="col me-5">
-                    <NewPost />
-                </div>
-                <div className="flex-none gap-2">
-                    <form onSubmit={handleSearch} className="flex flex-wrap">
-                        <div className="form-control column-4">
-                            <input
-                                type="text"
-                                value={query}
-                                placeholder="Search"
-                                className="input input-bordered w-24 md:w-auto"
-                                onChange={(e) => setQuery(e.target.value)}
-                            />
-                        </div>
-                        <div>
-                            <button className="btn btn-ghost" type="submit">
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="16"
-                                    height="16"
-                                    fill="currentColor"
-                                    className="bi bi-search"
-                                    viewBox="0 0 16 16"
-                                >
-                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
-                                </svg>
-                            </button>
-                        </div>
-                    </form>
-                    {!login ? (
-                        <div>
-                            <button
-                                type="button"
-                                class="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                                onClick={() =>
-                                    document
-                                        .getElementById("signUp_modal")
-                                        .showModal()
-                                }
-                            >
-                                Log In/Sign Up
-                            </button>
-                            <dialog
-                                id="signUp_modal"
-                                className="modal flex justify-center"
-                            >
-                                <SignUp id={"signUp_modal"} />
-                            </dialog>{" "}
-                        </div>
-                    ) : (
-                        <div className="dropdown dropdown-end">
-                            <div
-                                tabIndex={0}
-                                role="button"
-                                className="btn btn-ghost btn-circle avatar"
-                            >
-                                <div className="w-10 rounded-full">
+            <div>
+                <nav className="bg-white dark:bg-gray-800  shadow py-4 ">
+                    <div className="px-8 mx-auto ">
+                        <div className="flex items-center justify-between h-16">
+                            <div className=" flex items-center">
+                                <a className="flex-shrink-0" href="/">
                                     <img
-                                        alt="Tailwind CSS Navbar component"
-                                        src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                                        className="w-8 h-8"
+                                        src="/icons/rocket.svg"
+                                        alt="Workflow"
                                     />
+                                </a>
+                                <div className="hidden md:block">
+                                    <div className="flex items-baseline ml-10 space-x-4">
+                                        <a
+                                            className="text-gray-800  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-md font-medium"
+                                            href="/#"
+                                        >
+                                            Home
+                                        </a>
+                                        <a
+                                            className="text-gray-300 dark:text-white  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-md font-medium"
+                                            href="/#"
+                                        >
+                                            Gallery
+                                        </a>
+                                        <a
+                                            className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-md font-medium"
+                                            href="/#"
+                                        >
+                                            Content
+                                        </a>
+                                        <a
+                                            className="text-gray-300  hover:text-gray-800 dark:hover:text-white px-3 py-2 rounded-md text-md font-medium"
+                                            href="/#"
+                                        >
+                                            Contact
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
-                            <ul className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
-                                <li>Profile</li>
-                                <li>
-                                    <button
-                                        className="btn justify-between"
-                                        onClick={() =>
-                                            document
-                                                .getElementById("signUp_modal")
-                                                .showModal()
-                                        }
-                                    >
-                                        Sign in
-                                    </button>
-                                </li>
-
-                                <li>
-                                    <a>Settings</a>
-                                </li>
-                                <li>
-                                    <a>Logout</a>
-                                </li>
-                            </ul>
+                            <div className="flex">
+                                <div className="col me-5">
+                                    <NewPost />
+                                </div>
+                                {!login ? (
+                                    <div>
+                                        <button
+                                            type="button"
+                                            className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                                            onClick={() =>
+                                                document
+                                                    .getElementById(
+                                                        "signUp_modal"
+                                                    )
+                                                    .showModal()
+                                            }
+                                        >
+                                            Log In / Sign Up
+                                        </button>
+                                        <dialog
+                                            id="signUp_modal"
+                                            className="modal flex justify-center"
+                                        >
+                                            <SignUp id={"signUp_modal"} />
+                                        </dialog>{" "}
+                                    </div>
+                                ) : (
+                                    <>
+                                        <div className="block">
+                                            <div className="flex items-center ml-4 md:ml-6">
+                                                <div className="relative ml-3">
+                                                    <div className="relative inline-block text-left">
+                                                        <div>
+                                                            <button
+                                                                type="button"
+                                                                className="  flex items-center justify-center w-full rounded-md  px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-50 hover:bg-gray-50 dark:hover:bg-gray-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-gray-500"
+                                                                id="options-menu"
+                                                            >
+                                                                <svg
+                                                                    width="20"
+                                                                    fill="currentColor"
+                                                                    height="20"
+                                                                    className="text-gray-800"
+                                                                    viewBox="0 0 1792 1792"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                >
+                                                                    <path d="M1523 1339q-22-155-87.5-257.5t-184.5-118.5q-67 74-159.5 115.5t-195.5 41.5-195.5-41.5-159.5-115.5q-119 16-184.5 118.5t-87.5 257.5q106 150 271 237.5t356 87.5 356-87.5 271-237.5zm-243-699q0-159-112.5-271.5t-271.5-112.5-271.5 112.5-112.5 271.5 112.5 271.5 271.5 112.5 271.5-112.5 112.5-271.5zm512 256q0 182-71 347.5t-190.5 286-285.5 191.5-349 71q-182 0-348-71t-286-191-191-286-71-348 71-348 191-286 286-191 348-71 348 71 286 191 191 286 71 348z"></path>
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                        <div className="absolute right-0 w-56 mt-2 origin-top-right bg-white rounded-md shadow-lg dark:bg-gray-800 ring-1 ring-black ring-opacity-5">
+                                                            <div
+                                                                className="py-1 "
+                                                                role="menu"
+                                                                aria-orientation="vertical"
+                                                                aria-labelledby="options-menu"
+                                                            >
+                                                                <a
+                                                                    href="#"
+                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                                                                    role="menuitem"
+                                                                >
+                                                                    <span className="flex flex-col">
+                                                                        <span>
+                                                                            Settings
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                                <a
+                                                                    href="#"
+                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                                                                    role="menuitem"
+                                                                >
+                                                                    <span className="flex flex-col">
+                                                                        <span>
+                                                                            Account
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                                <a
+                                                                    href="#"
+                                                                    className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                                                                    role="menuitem"
+                                                                >
+                                                                    <span className="flex flex-col">
+                                                                        <span>
+                                                                            Logout
+                                                                        </span>
+                                                                    </span>
+                                                                </a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div className="flex -mr-2 md:hidden">
+                                            <button className="text-gray-800 dark:text-white hover:text-gray-300 inline-flex items-center justify-center p-2 rounded-md focus:outline-none">
+                                                <svg
+                                                    width="20"
+                                                    height="20"
+                                                    fill="currentColor"
+                                                    className="w-8 h-8"
+                                                    viewBox="0 0 1792 1792"
+                                                    xmlns="http://www.w3.org/2000/svg"
+                                                >
+                                                    <path d="M1664 1344v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45zm0-512v128q0 26-19 45t-45 19h-1408q-26 0-45-19t-19-45v-128q0-26 19-45t45-19h1408q26 0 45 19t19 45z"></path>
+                                                </svg>
+                                            </button>
+                                        </div>{" "}
+                                    </>
+                                )}
+                            </div>
                         </div>
-                    )}
-                </div>
+                    </div>
+                    <div className="md:hidden">
+                        <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                            <a
+                                className="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                href="/#"
+                            >
+                                Home
+                            </a>
+                            <a
+                                className="text-gray-800 dark:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                href="/#"
+                            >
+                                Gallery
+                            </a>
+                            <a
+                                className="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                href="/#"
+                            >
+                                Content
+                            </a>
+                            <a
+                                className="text-gray-300 hover:text-gray-800 dark:hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                                href="/#"
+                            >
+                                Contact
+                            </a>
+                        </div>
+                    </div>
+                </nav>
             </div>
         </>
     )
