@@ -1,11 +1,8 @@
-import cn from "classnames"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useState } from "react"
 import "react-quill/dist/quill.snow.css"
-import { ToastContainer, toast, useToast } from "react-toastify"
+import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import TextEditor from "./TextEditor"
-import styles from "./styles.module.scss"
-import { Link } from "react-router-dom"
 
 export default function NewPost() {
     const [text, setText] = useState("")
@@ -45,6 +42,10 @@ export default function NewPost() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
+        //imposto il tempo per la chiusura del modale sincronizzato con il toast
+        const timeoutCloseLogin = () => {
+            setTimeout(closeLogin, 2500)
+        }
         const textData = {
             readTime: {
                 value: readTime,
@@ -93,9 +94,17 @@ export default function NewPost() {
             if (fileResponse.ok) {
                 const fileDataResponse = await fileResponse.json()
                 console.log(fileDataResponse)
-                useToast.success("Comment saved successfully!", {
-                    position: toast.POSITION.BOTTOM_RIGHT,
+                toast.success(" Login successfull!", {
+                    position: "top-center",
+                    autoClose: 2000,
+                    hideProgressBar: false,
+                    closeOnClick: false,
+                    pauseOnHover: false,
+                    draggable: false,
+
+                    theme: "light",
                 })
+                timeoutCloseLogin()
             } else {
                 throw new Error(`HTTP error! Status: ${response.status}`)
             }
@@ -104,7 +113,6 @@ export default function NewPost() {
         } finally {
             setLoading(false)
         }
-        // getPosts();
     }
     const closeModal = () => {
         setFirstName("")
@@ -117,75 +125,118 @@ export default function NewPost() {
     }
     return (
         <>
-            {/* You can open the modal using document.getElementById('ID').showModal() method */}
-            <button
-                type="button"
-                className="py-2 px-4  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  opacity-70  rounded-lg "
-                onClick={() =>
-                    document.getElementById("addArticleDialog").showModal()
-                }
-            >
-                {" "}
-                Add Post
-            </button>
+            <form onSubmit={handleSubmit}>
+                <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
+                    Add Article
+                </div>
+                <div className="grid max-w-xl grid-cols-2 gap-4 m-auto">
+                    <div className="col-span-2 lg:col-span-1">
+                        <div className=" relative ">
+                            <input
+                                type="text"
+                                id="contact-form-id"
+                                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                placeholder="Author Id"
+                                required
+                                value={idAuthor}
+                                onChange={(e) => setIdAuthor(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-span-2 lg:col-span-1">
+                        <div className=" relative ">
+                            <input
+                                type="text"
+                                id="contact-form-title"
+                                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent "
+                                placeholder="Title"
+                                required
+                                value={title}
+                                onChange={(e) => setTitle(e.target.value)}
+                            />
+                        </div>
+                    </div>
+                    <div className="col-span-2 lg:col-span-1">
+                        <div className=" relative ">
+                            <select
+                                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent "
+                                required
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                            >
+                                <option selected>Category</option>
+                                <option value="Frontend">Mountain</option>
+                                <option value="Backend">Lead</option>
+                                <option value="AI">Boulder</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="col-span-2 lg:col-span-1">
+                        <div className=" relative ">
+                            <select
+                                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent "
+                                required
+                                value={readTime}
+                                onChange={(e) => setReadTime(e.target.value)}
+                            >
+                                <option selected>Read Time</option>
+                                <option value="1 ">1 minute</option>
+                                <option value="2">2 minute</option>
+                                <option value="3">3 minuti</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div className="col-span-2">
+                        <input
+                            type="file"
+                            class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:disabled:opacity-50 file:disabled:pointer-events-none dark:file:bg-blue-500 dark:hover:file:bg-blue-400"
+                            multiple={false}
+                            onChange={(e) => setCover(e.target.files[0])}
+                        />
+                    </div>
 
-            <dialog
-                id="addArticleDialog"
-                className="w-full max-w-2xl px-5 py-10 m-auto mt-10 bg-white rounded-lg shadow dark:bg-gray-800"
-            >
-                <form>
-                    <div className="flex justify-end text-2xl">
-                        <button onClick={closeModal}>
-                            <i className="fa-solid fa-xmark"></i>
-                        </button>
-                    </div>
-                    <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
-                        Add Article
-                    </div>
-                    <div className="grid max-w-xl grid-cols-2 gap-4 m-auto">
-                        <div className="col-span-2 lg:col-span-1">
-                            <div className=" relative ">
-                                <input
-                                    type="text"
-                                    id="contact-form-name"
-                                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                    placeholder="Name"
-                                />
-                            </div>
-                        </div>
-                        <div className="col-span-2 lg:col-span-1">
-                            <div className=" relative ">
-                                <input
-                                    type="text"
-                                    id="contact-form-email"
-                                    className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                    placeholder="email"
-                                />
-                            </div>
-                        </div>
-                        <div className="col-span-2">
-                            <label className="text-gray-700">
-                                <textarea
+                    <div className="col-span-2">
+                        <label className="text-gray-700">
+                            <TextEditor
+                                theme="snow"
+                                className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                text={text}
+                                setText={setText}
+                                required
+                                onChange={handleChange}
+                            />
+                            {/* <textarea
                                     className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
                                     id="comment"
                                     placeholder="Enter your comment"
                                     name="comment"
                                     rows="5"
                                     cols="40"
-                                ></textarea>
-                            </label>
-                        </div>
-                        <div className="col-span-2 text-right">
-                            <button
-                                type="submit"
-                                className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-                            >
-                                Send
-                            </button>
-                        </div>
+                                ></textarea> */}
+                        </label>
                     </div>
-                </form>
-            </dialog>
+                    <div className="col-span-2 text-right">
+                        <button
+                            type="submit"
+                            className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                        >
+                            Send
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <ToastContainer
+                position="top-center"
+                autoClose={1000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick={false}
+                rtl={false}
+                pauseOnFocusLoss
+                draggable={false}
+                pauseOnHover={false}
+                theme="colored"
+            />
 
             {/* <dialog id="my_modal_3" className="modal">
                 <div className="modal-box max-h-fit">
