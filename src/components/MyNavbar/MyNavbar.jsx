@@ -1,6 +1,7 @@
 import { useState } from "react"
 import SignUp from "./Signup/SignUp"
 import NewPost from "./NewPost/NewPost"
+import Logo from "../../assets/logo.svg"
 
 export default function MyNavbar(props) {
     const [login, setLogin] = useState(false)
@@ -15,7 +16,7 @@ export default function MyNavbar(props) {
                                 <a className="flex-shrink-0" href="/">
                                     <img
                                         className="w-8 h-8"
-                                        src="/icons/rocket.svg"
+                                        src={Logo}
                                         alt="Workflow"
                                     />
                                 </a>
