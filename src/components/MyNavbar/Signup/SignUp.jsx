@@ -1,8 +1,9 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Login from "../Login/Login"
 import ConfermationEmail from "../../ConfermationEmail/ConfermationEmail"
 
 export default function SignUp(props) {
+    const { login, setLogin } = props
     const { id } = props
     const [author, setAuthor] = useState("")
     const [firstName, setFirstName] = useState("")
@@ -17,6 +18,11 @@ export default function SignUp(props) {
         e.preventDefault()
         // setLoading(true);
         setEmailExists(false)
+
+        //salvo la data in cui avviene la registrazione
+        let date = new Date().toLocaleDateString()
+        console.log(date)
+
         const formData = {
             firstName: firstName,
 
@@ -25,6 +31,7 @@ export default function SignUp(props) {
             email: email,
 
             password: password,
+            createdAt: date,
         }
 
         try {
@@ -46,6 +53,7 @@ export default function SignUp(props) {
 
             const data = await response.json()
             setAuthor(data)
+            console.log(author)
             console.log(data)
         } catch (error) {
             console.log("Error fetching data:", error)
@@ -54,6 +62,35 @@ export default function SignUp(props) {
             // setLoading(false)
         }
     }
+    const sendVerifyEmail = async () => {
+        if (successfullRegistration) {
+            // const { email, firstName, LastName } = author
+            try {
+                const response = await fetch(
+                    `http://localhost:${
+                        import.meta.env.VITE_MY_PORT
+                    }/api/verifyEmail/`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        method: "POST",
+                        body: JSON.stringify(),
+                    }
+                )
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`)
+                }
+                const data = await response.json()
+            } catch (error) {
+                console.log("Error fetching data:", error)
+            }
+        }
+    }
+    useEffect(() => {
+        sendVerifyEmail()
+    }),
+        [successfullRegistration]
 
     // Chiude il modale e porta gli stati al valore di default
     const closeSignUp = () => {
@@ -89,9 +126,47 @@ export default function SignUp(props) {
                         Sign in
                     </a>
                     <dialog id="login_modal" className="modal">
-                        <Login id={"login_modal"} />
+                        <Login
+                            id={"login_modal"}
+                            login={login}
+                            setLogin={setLogin}
+                        />
                     </dialog>
                 </span>
+                <div class="flex gap-4 item-center mt-5">
+                    <button
+                        type="button"
+                        class="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            class="mr-2"
+                            viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M1343 12v264h-157q-86 0-116 36t-30 108v189h293l-39 296h-254v759h-306v-759h-255v-296h255v-218q0-186 104-288.5t277-102.5q147 0 228 12z"></path>
+                        </svg>
+                        Facebook
+                    </button>
+                    <button
+                        type="button"
+                        class="py-2 px-4 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                    >
+                        <svg
+                            width="20"
+                            height="20"
+                            fill="currentColor"
+                            class="mr-2"
+                            viewBox="0 0 1792 1792"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path d="M896 786h725q12 67 12 128 0 217-91 387.5t-259.5 266.5-386.5 96q-157 0-299-60.5t-245-163.5-163.5-245-60.5-299 60.5-299 163.5-245 245-163.5 299-60.5q300 0 515 201l-209 201q-123-119-306-119-129 0-238.5 65t-173.5 176.5-64 243.5 64 243.5 173.5 176.5 238.5 65q87 0 160-24t120-60 82-82 51.5-87 22.5-78h-436v-264z"></path>
+                        </svg>
+                        Google
+                    </button>
+                </div>
                 <div className="p-6 mt-8">
                     <form onSubmit={handleSubmit}>
                         <div className="flex gap-4 mb-2">

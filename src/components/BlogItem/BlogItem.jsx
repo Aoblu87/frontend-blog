@@ -36,8 +36,8 @@ export default function BlogItem(props) {
                                     {author.firstName} {author.lastName}
                                 </p>
                                 <p className="text-gray-400 dark:text-gray-300">
-                                    20 mars 2029 - {readTime.value}{" "}
-                                    {readTime.unit} read
+                                    {/* {createdAt}  */} 20 Gennaio 2023 -{" "}
+                                    {readTime.value} {readTime.unit} read
                                 </p>
                             </div>
                         </div>

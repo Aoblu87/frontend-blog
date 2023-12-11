@@ -42,6 +42,11 @@ export default function NewPost() {
     const handleSubmit = async (e) => {
         e.preventDefault()
         setLoading(true)
+
+        //salvo la data in cui avviene la pubblicazione
+        let date = new Date().toLocaleDateString()
+        console.log(date)
+
         //imposto il tempo per la chiusura del modale sincronizzato con il toast
         const timeoutCloseLogin = () => {
             setTimeout(closeLogin, 2500)
@@ -58,6 +63,7 @@ export default function NewPost() {
             title: title,
 
             content: text,
+            createdAt: date,
         }
         const formData = new FormData()
         formData.append("cover", cover)
@@ -164,7 +170,7 @@ export default function NewPost() {
                                 value={category}
                                 onChange={(e) => setCategory(e.target.value)}
                             >
-                                <option selected>Category</option>
+                                <option>Category</option>
                                 <option value="Frontend">Mountain</option>
                                 <option value="Backend">Lead</option>
                                 <option value="AI">Boulder</option>
@@ -179,7 +185,7 @@ export default function NewPost() {
                                 value={readTime}
                                 onChange={(e) => setReadTime(e.target.value)}
                             >
-                                <option selected>Read Time</option>
+                                <option>Read Time</option>
                                 <option value="1 ">1 minute</option>
                                 <option value="2">2 minute</option>
                                 <option value="3">3 minuti</option>
@@ -189,7 +195,7 @@ export default function NewPost() {
                     <div className="col-span-2">
                         <input
                             type="file"
-                            class="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:disabled:opacity-50 file:disabled:pointer-events-none dark:file:bg-blue-500 dark:hover:file:bg-blue-400"
+                            className="block w-full text-sm text-gray-500 file:me-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-600 file:text-white hover:file:bg-blue-700 file:disabled:opacity-50 file:disabled:pointer-events-none dark:file:bg-blue-500 dark:hover:file:bg-blue-400"
                             multiple={false}
                             onChange={(e) => setCover(e.target.files[0])}
                         />
