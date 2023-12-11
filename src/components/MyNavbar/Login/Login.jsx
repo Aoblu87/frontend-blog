@@ -55,7 +55,7 @@ export default function Login(props) {
             }
 
             const data = await response.json()
-            setToken(data.token, data.email)
+            setToken(data.token, data._id)
             console.log(data)
         } catch (error) {
             console.log("Error fetching data:", error)
@@ -77,8 +77,11 @@ export default function Login(props) {
 
     useEffect(() => {
         // storing input name
-        localStorage.setItem("token", JSON.stringify({ token }))
-    }, [token])
+        const token = localStorage.setItem(
+            JSON.stringify({ token, userid: _id })
+        )
+        const userId = localStorage.setItem(JSON.stringify({ userid: _id }))
+    }, [token, userId])
     return (
         <>
             <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
