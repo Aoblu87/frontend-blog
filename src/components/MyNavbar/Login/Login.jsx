@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
+import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify"
 
 export default function Login(props) {
@@ -7,6 +8,7 @@ export default function Login(props) {
     const [password, setPassword] = useState("")
     const [emailExists, setEmailExists] = useState(true)
     const [token, setToken] = useState("")
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -34,7 +36,10 @@ export default function Login(props) {
                         "Content-Type": "application/json",
                     },
                     method: "POST",
-                    body: JSON.stringify(formData),
+                    body: JSON.stringify({
+                        email,
+                        password,
+                    }),
                 }
             )
             if (!response.ok) {
@@ -55,7 +60,13 @@ export default function Login(props) {
             }
 
             const data = await response.json()
-            setToken(data.token, data._id)
+            if (data.token) {
+                localStorage.setItem("userId", data.userId)
+                localStorage.setItem("token", data.token)
+            }
+
+            navigate("/")
+
             console.log(data)
         } catch (error) {
             console.log("Error fetching data:", error)
@@ -75,13 +86,6 @@ export default function Login(props) {
         document.getElementById("login_modal").close()
     }
 
-    useEffect(() => {
-        // storing input name
-        const token = localStorage.setItem(
-            JSON.stringify({ token, userid: _id })
-        )
-        const userId = localStorage.setItem(JSON.stringify({ userid: _id }))
-    }, [token, userId])
     return (
         <>
             <div className="flex flex-col w-full max-w-md px-4 py-8 bg-white rounded-lg shadow dark:bg-gray-800 sm:px-6 md:px-8 lg:px-10">
@@ -93,10 +97,10 @@ export default function Login(props) {
                 <div className="self-center mb-6 text-xl font-light text-gray-600 sm:text-2xl dark:text-white">
                     Login To Your Account
                 </div>
-                <div class="flex gap-4 item-center">
+                <div className="flex gap-4 item-center">
                     <button
                         type="button"
-                        class="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                        className="py-2 px-4 flex justify-center items-center  bg-blue-600 hover:bg-blue-700 focus:ring-blue-500 focus:ring-offset-blue-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                     >
                         <svg
                             width="20"
@@ -112,13 +116,18 @@ export default function Login(props) {
                     </button>
                     <button
                         type="button"
-                        class="py-2 px-4 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                        className="py-2 px-4 flex justify-center items-center  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
+                        onClick={() => {
+                            window.location.assign(
+                                "http://localhost:3030/users/oauth-google"
+                            )
+                        }}
                     >
                         <svg
                             width="20"
                             height="20"
                             fill="currentColor"
-                            class="mr-2"
+                            className="mr-2"
                             viewBox="0 0 1792 1792"
                             xmlns="http://www.w3.org/2000/svg"
                         >
