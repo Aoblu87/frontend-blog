@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { ToastContainer, toast } from "react-toastify"
 
 export default function Login(props) {
-    const { login, setLogin } = props
+    const { setUser } = props
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [emailExists, setEmailExists] = useState(true)
@@ -53,18 +53,11 @@ export default function Login(props) {
             }
 
             const data = await response.json()
-            console.log(data)
-            setLogin(true)
-            if (data.token) {
-                localStorage.setItem("userId", data.userId)
-                localStorage.setItem("token", data.token)
-            }
-            navigate("/")
-
-            console.log(data)
+            setUser(true)
         } catch (error) {
             console.log("Error fetching data:", error)
         } finally {
+            setUser(true)
         }
     }
 

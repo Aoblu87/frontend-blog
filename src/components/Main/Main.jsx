@@ -4,7 +4,7 @@ import useJwt from "../../hooks/useJwt"
 import { useNavigate } from "react-router-dom"
 
 export default function Main(props) {
-    const { login, setLogin } = props
+    const { user, setUser } = props
     const [query, setQuery] = useState("")
     const [result, setResult] = useState()
 
@@ -36,21 +36,29 @@ export default function Main(props) {
     }
 
     //Cerco se l'utente esiste già e ha un token valido
-    // useEffect(() => {
-    //     // Altrimenti, li utilizzo per fare una chiamata API e recuperare i dati dell'utente
-    //     fetch(`http://localhost:3030/api/authors/${userId}`, {
-    //         headers: { Authorization: `Bearer ${token}` },
-    //     })
-    //         .then((response) => response.json())
-    //         .then((user) => {
-    //             // Se la chiamata API va a buon fine mostro i dati dell'utente
-    //             setUser(user)
-    //         })
-    //         .catch(() => {
-    //             // Se la chiamata API fallisce reindirizzo l'utente alla pagina di login
-    //             navigate("/")
-    //         })
-    // }, [navigate, token, userId])
+    useEffect(() => {
+        // Altrimenti, li utilizzo per fare una chiamata API e recuperare i dati dell'utente
+        fetch(`http://localhost:3030/api/authors/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error()
+                }
+                return response.json()
+            })
+
+            .then((user) => {
+                // Se la chiamata API va a buon fine mostro i dati dell'utente
+
+                setUser(user)
+                console.log(user)
+            })
+            .catch(() => {
+                // Se la chiamata API fallisce reindirizzo l'utente alla pagina di login
+                navigate("/")
+            })
+    }, [token, userId])
     return (
         <>
             <div className="w-full p-12 bg-white">

@@ -1,11 +1,12 @@
 import { useState } from "react"
-import SignUp from "./Signup/SignUp"
-import NewPost from "./NewPost/NewPost"
 import Logo from "../../assets/logo.svg"
+import NewPost from "./NewPost/NewPost"
+import SignUp from "./Signup/SignUp"
 
 export default function MyNavbar(props) {
+    const { user, setUser } = props
     const [selected, setSelected] = useState(false)
-    const [login, setLogin] = useState()
+
     return (
         <>
             <div>
@@ -73,7 +74,7 @@ export default function MyNavbar(props) {
                                 >
                                     <NewPost id={"addArticleDialog"} />
                                 </dialog>{" "}
-                                {!login ? (
+                                {!user ? (
                                     <div className="flex mx-2">
                                         <button
                                             type="button"
@@ -86,7 +87,7 @@ export default function MyNavbar(props) {
                                                     .showModal()
                                             }
                                         >
-                                            Log In / Sign Up
+                                            Login / Signup
                                         </button>
                                         <dialog
                                             id="signUp_modal"
@@ -94,8 +95,8 @@ export default function MyNavbar(props) {
                                         >
                                             <SignUp
                                                 id={"signUp_modal"}
-                                                login={login}
-                                                setLogin={setLogin}
+                                                user={user}
+                                                setUser={setUser}
                                             />
                                         </dialog>{" "}
                                     </div>
@@ -172,11 +173,22 @@ export default function MyNavbar(props) {
                                                                     className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                                                                     role="menuitem"
                                                                 >
-                                                                    <span className="flex flex-col">
-                                                                        <span>
+                                                                    <div className="flex flex-col">
+                                                                        <button
+                                                                            onClick={() => {
+                                                                                // navigate(
+                                                                                //     "/"
+                                                                                // )
+
+                                                                                localStorage.clear()
+                                                                                setUser(
+                                                                                    false
+                                                                                )
+                                                                            }}
+                                                                        >
                                                                             Logout
-                                                                        </span>
-                                                                    </span>
+                                                                        </button>
+                                                                    </div>
                                                                 </a>
                                                             </div>
                                                         </div>

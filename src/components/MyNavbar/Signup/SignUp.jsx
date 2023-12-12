@@ -3,8 +3,8 @@ import Login from "../Login/Login"
 import ConfermationEmail from "../../ConfermationEmail/ConfermationEmail"
 
 export default function SignUp(props) {
-    const { login, setLogin } = props
-    const { id } = props
+    const { user, setUser } = props
+
     const [author, setAuthor] = useState("")
     const [firstName, setFirstName] = useState("")
     const [lastName, setLastName] = useState("")
@@ -52,13 +52,19 @@ export default function SignUp(props) {
             }
 
             const data = await response.json()
+            setEmailExists(true)
             setAuthor(data)
-            console.log(author)
-            console.log(data)
+            if (data.token) {
+                localStorage.setItem(
+                    "userId",
+                    data.userId ? data.userId : data.payload.id
+                )
+                localStorage.setItem("token", data.token)
+            }
+            navigate("/")
         } catch (error) {
             console.log("Error fetching data:", error)
         } finally {
-            setEmailExists(true)
             // setLoading(false)
         }
     }
@@ -75,7 +81,7 @@ export default function SignUp(props) {
                             "Content-Type": "application/json",
                         },
                         method: "POST",
-                        body: JSON.stringify(),
+                        body: JSON.stringify({ email, _id }),
                     }
                 )
                 if (!response.ok) {
@@ -90,7 +96,7 @@ export default function SignUp(props) {
     useEffect(() => {
         sendVerifyEmail()
     }),
-        [successfullRegistration]
+        []
 
     // Chiude il modale e porta gli stati al valore di default
     const closeSignUp = () => {
@@ -128,8 +134,8 @@ export default function SignUp(props) {
                     <dialog id="login_modal" className="modal">
                         <Login
                             id={"login_modal"}
-                            login={login}
-                            setLogin={setLogin}
+                            user={user}
+                            setUser={setUser}
                         />
                     </dialog>
                 </span>
