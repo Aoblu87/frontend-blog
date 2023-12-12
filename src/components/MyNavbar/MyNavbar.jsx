@@ -4,9 +4,8 @@ import NewPost from "./NewPost/NewPost"
 import Logo from "../../assets/logo.svg"
 
 export default function MyNavbar(props) {
-    const [login, setLogin] = useState(false)
     const [selected, setSelected] = useState(false)
-
+    const [login, setLogin] = useState()
     return (
         <>
             <div>

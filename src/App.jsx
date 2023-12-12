@@ -8,6 +8,7 @@ import Main from "./components/Main/Main"
 import LoadingContext from "./contexts/LoadingContext"
 export default function App() {
     const [loading, setLoading] = useState(true)
+
     return (
         <>
             <LoadingContext.Provider value={{ loading, setLoading }}>
