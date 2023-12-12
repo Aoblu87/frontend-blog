@@ -1,9 +1,15 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import BlogList from "../BlogList/BlogList"
+import useJwt from "../../hooks/useJwt"
+import { useNavigate } from "react-router-dom"
 
 export default function Main(props) {
     const [query, setQuery] = useState("")
     const [result, setResult] = useState()
+    const navigate = useNavigate()
+
+    const { userId, token } = useJwt()
+
     const handleSearch = async (e) => {
         e.preventDefault()
         try {
@@ -26,6 +32,23 @@ export default function Main(props) {
             console.error("Errore durante la ricerca:", errore.message)
         }
     }
+
+    //Cerco se l'utente esiste già e ha un token valido
+    useEffect(() => {
+        // Altrimenti, li utilizzo per fare una chiamata API e recuperare i dati dell'utente
+        fetch(`http://localhost:3030/api/authors/${userId}`, {
+            headers: { Authorization: `Bearer ${token}` },
+        })
+            .then((response) => response.json())
+            .then((user) => {
+                // Se la chiamata API va a buon fine mostro i dati dell'utente
+                setUser(user)
+            })
+            .catch(() => {
+                // Se la chiamata API fallisce reindirizzo l'utente alla pagina di login
+                navigate("/")
+            })
+    }, [navigate, token, userId])
     return (
         <>
             <div className="w-full p-12 bg-white">
