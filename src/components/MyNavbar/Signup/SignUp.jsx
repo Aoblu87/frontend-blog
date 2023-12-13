@@ -81,13 +81,14 @@ export default function SignUp(props) {
                             "Content-Type": "application/json",
                         },
                         method: "POST",
-                        body: JSON.stringify({ email, _id }),
+                        body: JSON.stringify({ email, _id, password }),
                     }
                 )
                 if (!response.ok) {
                     throw new Error(`HTTP error! Status: ${response.status}`)
                 }
                 const data = await response.json()
+                console.log(data)
             } catch (error) {
                 console.log("Error fetching data:", error)
             }
