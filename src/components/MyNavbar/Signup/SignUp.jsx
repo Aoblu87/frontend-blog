@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import Login from "../Login/Login"
 import ConfermationEmail from "../../ConfermationEmail/ConfermationEmail"
 
@@ -54,13 +54,14 @@ export default function SignUp(props) {
             const data = await response.json()
             setEmailExists(true)
             setAuthor(data)
-            if (data.token) {
-                localStorage.setItem(
-                    "userId",
-                    data.userId ? data.userId : data.payload.id
-                )
-                localStorage.setItem("token", data.token)
-            }
+
+            // if (data.token) {
+            //     localStorage.setItem(
+            //         "userId",
+            //         data.userId ? data.userId : data.payload.id
+            //     )
+            //     localStorage.setItem("token", data.token)
+            // }
             navigate("/")
         } catch (error) {
             console.log("Error fetching data:", error)
@@ -69,8 +70,10 @@ export default function SignUp(props) {
         }
     }
     const sendVerifyEmail = async () => {
-        if (successfullRegistration) {
-            // const { email, firstName, LastName } = author
+        const id = {
+            _id: author._id,
+        }
+        if (successfullRegistration && author && author._id) {
             try {
                 const response = await fetch(
                     `http://localhost:${
@@ -81,7 +84,7 @@ export default function SignUp(props) {
                             "Content-Type": "application/json",
                         },
                         method: "POST",
-                        body: JSON.stringify({ email, _id, password }),
+                        body: JSON.stringify(id),
                     }
                 )
                 if (!response.ok) {
@@ -94,10 +97,10 @@ export default function SignUp(props) {
             }
         }
     }
+
     useEffect(() => {
         sendVerifyEmail()
-    }),
-        []
+    }, [successfullRegistration, author._id])
 
     // Chiude il modale e porta gli stati al valore di default
     const closeSignUp = () => {
