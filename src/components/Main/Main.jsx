@@ -12,6 +12,7 @@ export default function Main(props) {
 
     const { userId, token } = useJwt()
 
+    //Fetch ricerca articoli
     const handleSearch = async (e) => {
         e.preventDefault()
         try {
@@ -28,7 +29,6 @@ export default function Main(props) {
             const data = await response.json()
             console.log("Risultato della ricerca:", data)
 
-            // Aggiorna lo stato con i risultati della ricerca
             setResult(data)
         } catch (errore) {
             console.error("Errore durante la ricerca:", errore.message)
@@ -51,7 +51,7 @@ export default function Main(props) {
             .then((user) => {
                 // Se la chiamata API va a buon fine mostro i dati dell'utente
 
-                setUser(user)
+                setUser(true)
                 console.log(user)
             })
             .catch(() => {

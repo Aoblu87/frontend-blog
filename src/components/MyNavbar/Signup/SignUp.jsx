@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react"
 import Login from "../Login/Login"
 import ConfermationEmail from "../../ConfermationEmail/ConfermationEmail"
+import { useNavigate } from "react-router-dom"
 
 export default function SignUp(props) {
     const { user, setUser } = props
@@ -13,6 +14,7 @@ export default function SignUp(props) {
     const [successfullRegistration, setSuccessfullRegistration] =
         useState(false)
     const [emailExists, setEmailExists] = useState(false)
+    const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
         e.preventDefault()
