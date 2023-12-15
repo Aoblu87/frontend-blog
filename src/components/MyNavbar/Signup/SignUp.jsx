@@ -67,8 +67,6 @@ export default function SignUp(props) {
             navigate("/")
         } catch (error) {
             console.log("Error fetching data:", error)
-        } finally {
-            // setLoading(false)
         }
     }
     const sendVerifyEmail = async () => {

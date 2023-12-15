@@ -51,13 +51,19 @@ export default function Login(props) {
                 })
                 timeoutCloseLogin()
             }
-
             const data = await response.json()
+            if (data.token) {
+                localStorage.setItem(
+                    "userId",
+                    data.userId ? data.userId : data.payload.id
+                )
+                localStorage.setItem("token", data.token)
+            }
+            console.log(data)
             setUser(true)
+            navigate("/")
         } catch (error) {
             console.log("Error fetching data:", error)
-        } finally {
-            setUser(true)
         }
     }
 
@@ -69,7 +75,7 @@ export default function Login(props) {
         setPassword("")
 
         setEmailExists(true)
-        document.getElementById("login_modal").close()
+        // document.getElementById("login_modal").close()
     }
 
     return (

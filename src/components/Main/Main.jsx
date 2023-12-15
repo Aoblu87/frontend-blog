@@ -27,7 +27,7 @@ export default function Main(props) {
             }
 
             const data = await response.json()
-            console.log("Risultato della ricerca:", data)
+            // console.log("Risultato della ricerca:", data)
 
             setResult(data)
         } catch (errore) {
@@ -52,7 +52,6 @@ export default function Main(props) {
                 // Se la chiamata API va a buon fine mostro i dati dell'utente
 
                 setUser(true)
-                console.log(user)
             })
             .catch(() => {
                 // Se la chiamata API fallisce reindirizzo l'utente alla pagina di login
@@ -96,6 +95,7 @@ export default function Main(props) {
                         </form>
                     </div>
                 </div>
+
                 <BlogList result={result} />
             </div>
         </>

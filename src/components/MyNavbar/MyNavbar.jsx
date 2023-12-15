@@ -1,12 +1,12 @@
 import { useState } from "react"
+import { Link, useNavigate } from "react-router-dom"
 import Logo from "../../assets/logo.svg"
 import NewPost from "./NewPost/NewPost"
 import SignUp from "./Signup/SignUp"
-import Profile from "../Profile/Profile"
-import { Link } from "react-router-dom"
 export default function MyNavbar(props) {
     const { user, setUser } = props
     const [selected, setSelected] = useState(false)
+    const navigate = useNavigate()
 
     return (
         <>
@@ -170,14 +170,28 @@ export default function MyNavbar(props) {
                                                                     </span>
                                                                 </a>
                                                                 <Link
-                                                                    to="/profile"
+                                                                    to={
+                                                                        "/profile"
+                                                                    }
                                                                     className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                                                                 >
-                                                                    <span className="flex flex-col">
-                                                                        <span>
-                                                                            Profile{" "}
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            !selected
+                                                                                ? setSelected(
+                                                                                      true
+                                                                                  )
+                                                                                : setSelected(
+                                                                                      false
+                                                                                  )
+                                                                        }}
+                                                                    >
+                                                                        <span className="flex flex-col">
+                                                                            <span>
+                                                                                Profile{" "}
+                                                                            </span>
                                                                         </span>
-                                                                    </span>
+                                                                    </button>
                                                                 </Link>
                                                                 <a
                                                                     href="#"
@@ -187,11 +201,10 @@ export default function MyNavbar(props) {
                                                                     <div className="flex flex-col">
                                                                         <button
                                                                             onClick={() => {
-                                                                                // navigate(
-                                                                                //     "/"
-                                                                                // )
-
-                                                                                localStorage.clear()
+                                                                                navigate(
+                                                                                    "/"
+                                                                                ),
+                                                                                    localStorage.clear()
                                                                                 setUser(
                                                                                     false
                                                                                 )

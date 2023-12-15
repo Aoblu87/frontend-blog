@@ -11,7 +11,7 @@ import LoadingContext from "./contexts/LoadingContext"
 export default function App() {
     const [loading, setLoading] = useState(true)
     const [user, setUser] = useState()
-
+    console.log("Utente loggato:" + user)
     return (
         <>
             <LoadingContext.Provider value={{ loading, setLoading }}>

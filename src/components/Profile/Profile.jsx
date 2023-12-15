@@ -1,448 +1,309 @@
-/*
-  This example requires some changes to your config:
-
-  ```
-  // tailwind.config.js
-  module.exports = {
-    // ...
-    plugins: [
-      // ...
-      require('@tailwindcss/forms'),
-    ],
-  }
-  ```
-*/
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid"
-
+import PhotoProfile from "../../assets/avatar-profile.jpeg"
 export default function Profile() {
     return (
-        <form>
-            <div className="space-y-12">
-                <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900">
+        <div className="max-w-4xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+            <div className="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
+                <div className="mb-8">
+                    <h2 className="text-xl font-bold text-gray-800 dark:text-gray-200">
                         Profile
                     </h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
-                        This information will be displayed publicly so be
-                        careful what you share.
+                    <p className="text-sm text-gray-600 dark:text-gray-400">
+                        Manage your name, password and account settings.
                     </p>
+                </div>
 
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div className="sm:col-span-4">
-                            <label
-                                htmlFor="username"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Username
+                <form>
+                    <div className="grid sm:grid-cols-12 gap-2 sm:gap-6">
+                        <div className="sm:col-span-3">
+                            <label className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
+                                Profile photo
                             </label>
-                            <div className="mt-2">
-                                <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                                    <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
-                                        workcation.com/
-                                    </span>
-                                    <input
-                                        type="text"
-                                        name="username"
-                                        id="username"
-                                        autoComplete="username"
-                                        className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
-                                        placeholder="janesmith"
-                                    />
+                        </div>
+
+                        <div className="sm:col-span-9">
+                            <div className="flex items-center gap-5">
+                                <img
+                                    className="inline-block h-16 w-16 rounded-full ring-2 ring-white dark:ring-gray-800"
+                                    src={PhotoProfile}
+                                    alt="Image Description"
+                                />
+
+                                <div className="flex gap-x-2">
+                                    <div>
+                                        <button
+                                            type="button"
+                                            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                        >
+                                            <svg
+                                                className="flex-shrink-0 w-4 h-4"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                width="24"
+                                                height="24"
+                                                viewBox="0 0 24 24"
+                                                fill="none"
+                                                stroke="currentColor"
+                                                strokeWidth="2"
+                                                strokeLinecap="round"
+                                                strokeLinejoin="round"
+                                            >
+                                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                                <polyline points="17 8 12 3 7 8" />
+                                                <line
+                                                    x1="12"
+                                                    x2="12"
+                                                    y1="3"
+                                                    y2="15"
+                                                />
+                                            </svg>
+                                            Upload photo
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="col-span-full">
+                        <div className="sm:col-span-3">
                             <label
-                                htmlFor="about"
-                                className="block text-sm font-medium leading-6 text-gray-900"
+                                htmlFor="af-account-full-name"
+                                className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200"
                             >
-                                About
+                                Full name
                             </label>
-                            <div className="mt-2">
-                                <textarea
-                                    id="about"
-                                    name="about"
-                                    rows={3}
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    defaultValue={""}
-                                />
-                            </div>
-                            <p className="mt-3 text-sm leading-6 text-gray-600">
-                                Write a few sentences about yourself.
-                            </p>
-                        </div>
-
-                        <div className="col-span-full">
-                            <label
-                                htmlFor="photo"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Photo
-                            </label>
-                            <div className="mt-2 flex items-center gap-x-3">
-                                <UserCircleIcon
-                                    className="h-12 w-12 text-gray-300"
-                                    aria-hidden="true"
-                                />
+                            <div className="hs-tooltip inline-block">
                                 <button
                                     type="button"
-                                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                                    className="hs-tooltip-toggle ms-1"
                                 >
-                                    Change
+                                    <svg
+                                        className="inline-block w-3 h-3 text-gray-400 dark:text-gray-600"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="16"
+                                        height="16"
+                                        fill="currentColor"
+                                        viewBox="0 0 16 16"
+                                    >
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
+                                    </svg>
                                 </button>
-                            </div>
-                        </div>
-
-                        <div className="col-span-full">
-                            <label
-                                htmlFor="cover-photo"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Cover photo
-                            </label>
-                            <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                                <div className="text-center">
-                                    <PhotoIcon
-                                        className="mx-auto h-12 w-12 text-gray-300"
-                                        aria-hidden="true"
-                                    />
-                                    <div className="mt-4 flex text-sm leading-6 text-gray-600">
-                                        <label
-                                            htmlFor="file-upload"
-                                            className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
-                                        >
-                                            <span>Upload a file</span>
-                                            <input
-                                                id="file-upload"
-                                                name="file-upload"
-                                                type="file"
-                                                className="sr-only"
-                                            />
-                                        </label>
-                                        <p className="pl-1">or drag and drop</p>
-                                    </div>
-                                    <p className="text-xs leading-5 text-gray-600">
-                                        PNG, JPG, GIF up to 10MB
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900">
-                        Personal Information
-                    </h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
-                        Use a permanent address where you can receive mail.
-                    </p>
-
-                    <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                        <div className="sm:col-span-3">
-                            <label
-                                htmlFor="first-name"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                First name
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    type="text"
-                                    name="first-name"
-                                    id="first-name"
-                                    autoComplete="given-name"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label
-                                htmlFor="last-name"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Last name
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    type="text"
-                                    name="last-name"
-                                    id="last-name"
-                                    autoComplete="family-name"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-4">
-                            <label
-                                htmlFor="email"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Email address
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    id="email"
-                                    name="email"
-                                    type="email"
-                                    autoComplete="email"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-3">
-                            <label
-                                htmlFor="country"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Country
-                            </label>
-                            <div className="mt-2">
-                                <select
-                                    id="country"
-                                    name="country"
-                                    autoComplete="country-name"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                <span
+                                    className="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible w-40 text-center z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700"
+                                    role="tooltip"
                                 >
-                                    <option>United States</option>
-                                    <option>Canada</option>
-                                    <option>Mexico</option>
+                                    Displayed on public htmlForums, such as
+                                    Preline
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="sm:col-span-9">
+                            <div className="sm:flex">
+                                <input
+                                    id="af-account-full-name"
+                                    type="text"
+                                    className="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                    placeholder="Maria"
+                                />
+                                <input
+                                    type="text"
+                                    className="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                    placeholder="Boone"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="sm:col-span-3">
+                            <label
+                                htmlFor="af-account-email"
+                                className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200"
+                            >
+                                Email
+                            </label>
+                        </div>
+
+                        <div className="sm:col-span-9">
+                            <input
+                                id="af-account-email"
+                                type="email"
+                                className="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                placeholder="maria@site.com"
+                            />
+                        </div>
+
+                        <div className="sm:col-span-3">
+                            <label
+                                htmlFor="af-account-password"
+                                className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200"
+                            >
+                                Password
+                            </label>
+                        </div>
+
+                        <div className="sm:col-span-9">
+                            <div className="space-y-2">
+                                <input
+                                    id="af-account-password"
+                                    type="text"
+                                    className="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                    placeholder="Enter current password"
+                                />
+                                <input
+                                    type="text"
+                                    className="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                    placeholder="Enter new password"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="sm:col-span-3">
+                            <div className="inline-block">
+                                <label
+                                    htmlFor="af-account-phone"
+                                    className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200"
+                                >
+                                    Phone
+                                </label>
+                                <span className="text-sm text-gray-400 dark:text-gray-600">
+                                    (Optional)
+                                </span>
+                            </div>
+                        </div>
+
+                        <div className="sm:col-span-9">
+                            <div className="sm:flex">
+                                <input
+                                    id="af-account-phone"
+                                    type="text"
+                                    className="py-2 px-3 pe-11 block w-full border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                    placeholder="+x(xxx)xxx-xx-xx"
+                                />
+                                <select className="py-2 px-3 pe-9 block w-full sm:w-auto border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600">
+                                    <option>Mobile</option>
+                                    <option>Home</option>
+                                    <option>Work</option>
+                                    <option>Fax</option>
                                 </select>
                             </div>
-                        </div>
 
-                        <div className="col-span-full">
-                            <label
-                                htmlFor="street-address"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                Street address
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    type="text"
-                                    name="street-address"
-                                    id="street-address"
-                                    autoComplete="street-address"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-2 sm:col-start-1">
-                            <label
-                                htmlFor="city"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                City
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    type="text"
-                                    name="city"
-                                    id="city"
-                                    autoComplete="address-level2"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-2">
-                            <label
-                                htmlFor="region"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                State / Province
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    type="text"
-                                    name="region"
-                                    id="region"
-                                    autoComplete="address-level1"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="sm:col-span-2">
-                            <label
-                                htmlFor="postal-code"
-                                className="block text-sm font-medium leading-6 text-gray-900"
-                            >
-                                ZIP / Postal code
-                            </label>
-                            <div className="mt-2">
-                                <input
-                                    type="text"
-                                    name="postal-code"
-                                    id="postal-code"
-                                    autoComplete="postal-code"
-                                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="border-b border-gray-900/10 pb-12">
-                    <h2 className="text-base font-semibold leading-7 text-gray-900">
-                        Notifications
-                    </h2>
-                    <p className="mt-1 text-sm leading-6 text-gray-600">
-                        We'll always let you know about important changes, but
-                        you pick what else you want to hear about.
-                    </p>
-
-                    <div className="mt-10 space-y-10">
-                        <fieldset>
-                            <legend className="text-sm font-semibold leading-6 text-gray-900">
-                                By Email
-                            </legend>
-                            <div className="mt-6 space-y-6">
-                                <div className="relative flex gap-x-3">
-                                    <div className="flex h-6 items-center">
-                                        <input
-                                            id="comments"
-                                            name="comments"
-                                            type="checkbox"
-                                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                        />
-                                    </div>
-                                    <div className="text-sm leading-6">
-                                        <label
-                                            htmlFor="comments"
-                                            className="font-medium text-gray-900"
-                                        >
-                                            Comments
-                                        </label>
-                                        <p className="text-gray-500">
-                                            Get notified when someones posts a
-                                            comment on a posting.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="relative flex gap-x-3">
-                                    <div className="flex h-6 items-center">
-                                        <input
-                                            id="candidates"
-                                            name="candidates"
-                                            type="checkbox"
-                                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                        />
-                                    </div>
-                                    <div className="text-sm leading-6">
-                                        <label
-                                            htmlFor="candidates"
-                                            className="font-medium text-gray-900"
-                                        >
-                                            Candidates
-                                        </label>
-                                        <p className="text-gray-500">
-                                            Get notified when a candidate
-                                            applies for a job.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="relative flex gap-x-3">
-                                    <div className="flex h-6 items-center">
-                                        <input
-                                            id="offers"
-                                            name="offers"
-                                            type="checkbox"
-                                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                        />
-                                    </div>
-                                    <div className="text-sm leading-6">
-                                        <label
-                                            htmlFor="offers"
-                                            className="font-medium text-gray-900"
-                                        >
-                                            Offers
-                                        </label>
-                                        <p className="text-gray-500">
-                                            Get notified when a candidate
-                                            accepts or rejects an offer.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </fieldset>
-                        <fieldset>
-                            <legend className="text-sm font-semibold leading-6 text-gray-900">
-                                Push Notifications
-                            </legend>
-                            <p className="mt-1 text-sm leading-6 text-gray-600">
-                                These are delivered via SMS to your mobile
-                                phone.
+                            <p className="mt-3">
+                                <a
+                                    className="inline-flex items-center gap-x-1 text-sm text-blue-600 decoration-2 hover:underline font-medium dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                                    href="../docs/index.html"
+                                >
+                                    <svg
+                                        className="flex-shrink-0 w-4 h-4"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        width="24"
+                                        height="24"
+                                        viewBox="0 0 24 24"
+                                        fill="none"
+                                        stroke="currentColor"
+                                        strokeWidth="2"
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                    >
+                                        <circle cx="12" cy="12" r="10" />
+                                        <path d="M8 12h8" />
+                                        <path d="M12 8v8" />
+                                    </svg>
+                                    Add phone
+                                </a>
                             </p>
-                            <div className="mt-6 space-y-6">
-                                <div className="flex items-center gap-x-3">
-                                    <input
-                                        id="push-everything"
-                                        name="push-notifications"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                    />
-                                    <label
-                                        htmlFor="push-everything"
-                                        className="block text-sm font-medium leading-6 text-gray-900"
-                                    >
-                                        Everything
-                                    </label>
-                                </div>
-                                <div className="flex items-center gap-x-3">
-                                    <input
-                                        id="push-email"
-                                        name="push-notifications"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                    />
-                                    <label
-                                        htmlFor="push-email"
-                                        className="block text-sm font-medium leading-6 text-gray-900"
-                                    >
-                                        Same as email
-                                    </label>
-                                </div>
-                                <div className="flex items-center gap-x-3">
-                                    <input
-                                        id="push-nothing"
-                                        name="push-notifications"
-                                        type="radio"
-                                        className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
-                                    />
-                                    <label
-                                        htmlFor="push-nothing"
-                                        className="block text-sm font-medium leading-6 text-gray-900"
-                                    >
-                                        No push notifications
-                                    </label>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-            </div>
+                        </div>
 
-            <div className="mt-6 flex items-center justify-end gap-x-6">
-                <button
-                    type="button"
-                    className="text-sm font-semibold leading-6 text-gray-900"
-                >
-                    Cancel
-                </button>
-                <button
-                    type="submit"
-                    className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                >
-                    Save
-                </button>
+                        <div className="sm:col-span-3">
+                            <label
+                                htmlFor="af-account-gender-checkbox"
+                                className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200"
+                            >
+                                Gender
+                            </label>
+                        </div>
+
+                        <div className="sm:col-span-9">
+                            <div className="sm:flex">
+                                <label
+                                    htmlFor="af-account-gender-checkbox"
+                                    className="flex py-2 px-3  w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="af-account-gender-checkbox"
+                                        className="shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                        id="af-account-gender-checkbox"
+                                    />
+                                    <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
+                                        Male
+                                    </span>
+                                </label>
+
+                                <label
+                                    htmlFor="af-account-gender-checkbox-female"
+                                    className="flex py-2 px-3  w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="af-account-gender-checkbox"
+                                        className="shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                        id="af-account-gender-checkbox-female"
+                                    />
+                                    <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
+                                        Female
+                                    </span>
+                                </label>
+
+                                <label
+                                    htmlFor="af-account-gender-checkbox-other"
+                                    className="flex py-2 px-3  w-full border border-gray-200 shadow-sm -mt-px -ms-px first:rounded-t-lg last:rounded-b-lg sm:first:rounded-s-lg sm:mt-0 sm:first:ms-0 sm:first:rounded-se-none sm:last:rounded-es-none sm:last:rounded-e-lg text-sm relative focus:z-10 focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                >
+                                    <input
+                                        type="radio"
+                                        name="af-account-gender-checkbox"
+                                        className="shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                        id="af-account-gender-checkbox-other"
+                                    />
+                                    <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
+                                        Other
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div className="sm:col-span-3">
+                            <label
+                                htmlFor="af-account-bio"
+                                className="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200"
+                            >
+                                BIO
+                            </label>
+                        </div>
+
+                        <div className="sm:col-span-9">
+                            <textarea
+                                id="af-account-bio"
+                                className="py-2 px-3 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 dark:focus:ring-gray-600"
+                                rows="6"
+                                placeholder="Type your message..."
+                            ></textarea>
+                        </div>
+                    </div>
+
+                    <div className="mt-5 flex justify-end gap-x-2">
+                        <button
+                            type="button"
+                            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="button"
+                            className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        >
+                            Save changes
+                        </button>
+                    </div>
+                </form>
             </div>
-        </form>
+        </div>
     )
 }
