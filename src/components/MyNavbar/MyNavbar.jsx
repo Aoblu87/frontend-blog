@@ -2,16 +2,17 @@ import { useState } from "react"
 import Logo from "../../assets/logo.svg"
 import NewPost from "./NewPost/NewPost"
 import SignUp from "./Signup/SignUp"
-
+import Profile from "../Profile/Profile"
+import { Link } from "react-router-dom"
 export default function MyNavbar(props) {
     const { user, setUser } = props
     const [selected, setSelected] = useState(false)
 
     return (
         <>
-            <div>
-                <nav className="bg-white dark:bg-gray-800  shadow py-4 ">
-                    <div className="px-8 mx-auto ">
+            <div className="">
+                <nav className=" bg-white dark:bg-gray-800  shadow py-4 ">
+                    <div className="container mx-auto px-8">
                         <div className="flex items-center justify-between h-16">
                             <div className=" flex items-center">
                                 <a className="flex-shrink-0" href="/">
@@ -168,6 +169,16 @@ export default function MyNavbar(props) {
                                                                         </span>
                                                                     </span>
                                                                 </a>
+                                                                <Link
+                                                                    to="/profile"
+                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                                                                >
+                                                                    <span className="flex flex-col">
+                                                                        <span>
+                                                                            Profile{" "}
+                                                                        </span>
+                                                                    </span>
+                                                                </Link>
                                                                 <a
                                                                     href="#"
                                                                     className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"

@@ -37,7 +37,7 @@ export default function BlogList(props) {
                     <span className="loading loading-spinner text-info"></span>
                 </div>
             ) : result ? (
-                <div className="grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
+                <div className="container mx-auto grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
                     {result.map((post, i) => (
                         <BlogItem
                             key={`item-${i}`}
@@ -47,7 +47,7 @@ export default function BlogList(props) {
                     ))}
                 </div>
             ) : (
-                <div className="grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
+                <div className="container mx-auto grid grid-cols-1 gap-12 md:grid-cols-2 xl:grid-cols-4">
                     {posts.map((post, i) => (
                         <BlogItem
                             key={`item-${i}`}

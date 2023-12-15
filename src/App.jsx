@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Blog from "./components/Blog/Blog"
 import Footer from "./components/Footer/Footer"
 import MyNavbar from "./components/MyNavbar/MyNavbar"
+import Profile from "./components/Profile/Profile"
 
 import { useState } from "react"
 import Main from "./components/Main/Main"
@@ -22,6 +23,7 @@ export default function App() {
                             element={<Main user={user} setUser={setUser} />}
                         />
                         <Route path="/blog/:id" element={<Blog />} />
+                        <Route path="/profile" element={<Profile />} />
                     </Routes>
                     <Footer />
                 </BrowserRouter>

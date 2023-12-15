@@ -62,7 +62,7 @@ export default function Main(props) {
     return (
         <>
             <div className="w-full p-12 bg-white">
-                <div className="flex items-end justify-between mb-12 header">
+                <div className="container mx-auto flex items-end justify-between mb-12 header">
                     <div className="title">
                         <p className="mb-4 text-4xl font-bold text-gray-800">
                             Lastest articles
