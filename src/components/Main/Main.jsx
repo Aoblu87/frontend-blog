@@ -17,9 +17,7 @@ export default function Main(props) {
         e.preventDefault()
         try {
             const response = await fetch(
-                `http://localhost:${
-                    import.meta.env.VITE_MY_PORT
-                }/api/searchPost?title=${query}`
+                `${import.meta.env.VITE_MY_PORT}/api/searchPost?title=${query}`
             )
 
             if (!response.ok) {
@@ -38,7 +36,7 @@ export default function Main(props) {
     //Cerco se l'utente esiste già e ha un token valido
     useEffect(() => {
         // Altrimenti, li utilizzo per fare una chiamata API e recuperare i dati dell'utente
-        fetch(`http://localhost:3030/api/authors/${userId}`, {
+        fetch(`${import.meta.env.VITE_MY_PORT}/api/authors/${userId}`, {
             headers: { Authorization: `Bearer ${token}` },
         })
             .then((response) => {

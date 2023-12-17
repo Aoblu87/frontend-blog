@@ -8,9 +8,7 @@ export default function CommentList(props) {
     const getComments = async () => {
         try {
             const response = await fetch(
-                `http://localhost:${
-                    import.meta.env.VITE_MY_PORT
-                }/api/blogPosts/${id}/comments`
+                `${import.meta.env.VITE_MY_PORT}/api/blogPosts/${id}/comments`
             )
 
             if (!response.ok) {

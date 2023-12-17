@@ -10,7 +10,7 @@ export default function BlogList(props) {
     const getPosts = async () => {
         try {
             const response = await fetch(
-                `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts`
+                `${import.meta.env.VITE_MY_PORT}/api/blogPosts`
             )
 
             if (!response.ok) {

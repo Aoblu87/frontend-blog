@@ -11,9 +11,7 @@ export default function Blog() {
     const getPost = async () => {
         try {
             const response = await fetch(
-                `http://localhost:${
-                    import.meta.env.VITE_MY_PORT
-                }/api/blogPosts/${id}`
+                `${import.meta.env.VITE_MY_PORT}/api/blogPosts/${id}`
             )
 
             if (!response.ok) {

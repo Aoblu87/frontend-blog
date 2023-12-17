@@ -18,7 +18,7 @@ export default function NewPost() {
     // const getPosts = async () => {
     //   try {
     //     const response = await fetch(
-    //       `http://localhost:${import.meta.env.VITE_MY_PORT}/api/blogPosts`
+    //       `${import.meta.env.VITE_MY_PORT}/api/blogPosts`
     //     );
 
     //     if (!response.ok) {
@@ -71,9 +71,7 @@ export default function NewPost() {
         try {
             // Fetch POST per aggiungere BlogPOST
             const textResponse = await fetch(
-                `http://localhost:${
-                    import.meta.env.VITE_MY_PORT
-                }/api/blogPosts/`,
+                `${import.meta.env.VITE_MY_PORT}/api/blogPosts/`,
                 {
                     headers: {
                         "Content-Type": "application/json",
@@ -88,7 +86,7 @@ export default function NewPost() {
                 console.log(textDataResponse)
                 // fetch PATCH per aggiungere Cover
                 const fileResponse = await fetch(
-                    `http://localhost:${
+                    `${
                         import.meta.env.VITE_MY_PORT
                     }/api/blogPosts/${_id}/cover`,
                     {
