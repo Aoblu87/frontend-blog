@@ -59,8 +59,8 @@ export default function Main(props) {
     return (
         <>
             <div className="w-full p-12 bg-white">
-                <div className="container mx-auto flex items-end justify-between mb-12 header">
-                    <div className="title">
+                <div className="container mx-auto flex md:items-end md:justify-between mb-12 header flex-col md:flex-row">
+                    <div className="title flex flex-col ">
                         <p className="mb-4 text-4xl font-bold text-gray-800">
                             Lastest articles
                         </p>
@@ -69,7 +69,7 @@ export default function Main(props) {
                             by the CTO
                         </p>
                     </div>
-                    <div className="text-end">
+                    <div className="text-end flex flex-row">
                         <form
                             onSubmit={handleSearch}
                             className="flex flex-col justify-center w-3/4 max-w-sm space-y-3 md:flex-row md:w-full md:space-x-3 md:space-y-0"
@@ -84,12 +84,14 @@ export default function Main(props) {
                                     onChange={(e) => setQuery(e.target.value)}
                                 />
                             </div>
-                            <button
-                                className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
-                                type="submit"
-                            >
-                                Search
-                            </button>
+                            <div>
+                                <button
+                                    className="flex-shrink-0 px-4 py-2 text-base font-semibold text-white bg-purple-600 rounded-lg shadow-md hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-200"
+                                    type="submit"
+                                >
+                                    Search
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

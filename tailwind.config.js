@@ -21,7 +21,7 @@ export default {
         center: true,
     },
 
-    plugins: [require("daisyui")],
+    plugins: [require("@tailwindcss/forms"), require("daisyui")],
 
     daisyui: {
         themes: [

@@ -7,6 +7,7 @@ import Profile from "./components/Profile/Profile"
 import { useState } from "react"
 import Main from "./components/Main/Main"
 import LoadingContext from "./contexts/LoadingContext"
+import NewPost from "./components/MyNavbar/NewPost/NewPost"
 
 export default function App() {
     const [loading, setLoading] = useState(true)
@@ -24,6 +25,7 @@ export default function App() {
                         />
                         <Route path="/blog/:id" element={<Blog />} />
                         <Route path="/profile" element={<Profile />} />
+                        <Route path="/newPost" element={<NewPost />} />
                     </Routes>
                     <Footer />
                 </BrowserRouter>

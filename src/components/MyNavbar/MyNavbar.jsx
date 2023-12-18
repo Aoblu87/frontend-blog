@@ -193,6 +193,31 @@ export default function MyNavbar(props) {
                                                                         </span>
                                                                     </button>
                                                                 </Link>
+                                                                <Link
+                                                                    to={
+                                                                        "/newPost"
+                                                                    }
+                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                                                                >
+                                                                    <button
+                                                                        onClick={() => {
+                                                                            !selected
+                                                                                ? setSelected(
+                                                                                      true
+                                                                                  )
+                                                                                : setSelected(
+                                                                                      false
+                                                                                  )
+                                                                        }}
+                                                                    >
+                                                                        <span className="flex flex-col">
+                                                                            <span>
+                                                                                New
+                                                                                Post{" "}
+                                                                            </span>
+                                                                        </span>
+                                                                    </button>
+                                                                </Link>
                                                                 <a
                                                                     href="#"
                                                                     className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"

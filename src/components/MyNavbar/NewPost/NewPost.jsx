@@ -3,6 +3,7 @@ import "react-quill/dist/quill.snow.css"
 import { ToastContainer, toast } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 import TextEditor from "./TextEditor"
+import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid"
 
 export default function NewPost() {
     const [text, setText] = useState("")
@@ -14,25 +15,6 @@ export default function NewPost() {
     const [cover, setCover] = useState(null)
     const [readTime, setReadTime] = useState("")
     const [posts, setPosts] = useState([])
-
-    // const getPosts = async () => {
-    //   try {
-    //     const response = await fetch(
-    //       `${import.meta.env.VITE_MY_PORT}/api/blogPosts`
-    //     );
-
-    //     if (!response.ok) {
-    //       throw new Error(`HTTP error! Status: ${response.status}`);
-    //     }
-
-    //     const data = await response.json();
-    //     setPosts(data);
-    //   } catch (error) {
-    //     console.error("Error fetching data:", error);
-    //   } finally {
-    //     setLoading(false);
-    //   }
-    // };
 
     // Controllo cambiamento nella text area
     const handleChange = useCallback((value) => {
@@ -47,10 +29,6 @@ export default function NewPost() {
         let date = new Date().toLocaleDateString()
         console.log(date)
 
-        //imposto il tempo per la chiusura del modale sincronizzato con il toast
-        const timeoutCloseLogin = () => {
-            setTimeout(closeLogin, 2500)
-        }
         const textData = {
             readTime: {
                 value: readTime,
@@ -94,21 +72,22 @@ export default function NewPost() {
                         body: formData,
                     }
                 )
-            }
-            if (fileResponse.ok) {
-                const fileDataResponse = await fileResponse.json()
-                console.log(fileDataResponse)
-                toast.success(" Login successfull!", {
-                    position: "top-center",
-                    autoClose: 2000,
-                    hideProgressBar: false,
-                    closeOnClick: false,
-                    pauseOnHover: false,
-                    draggable: false,
+                if (fileResponse.ok) {
+                    const fileDataResponse = await fileResponse.json()
+                    console.log(fileDataResponse)
+                    toast.success(" Login successfull!", {
+                        position: "top-center",
+                        autoClose: 2000,
+                        hideProgressBar: false,
+                        closeOnClick: false,
+                        pauseOnHover: false,
+                        draggable: false,
 
-                    theme: "light",
-                })
-                timeoutCloseLogin()
+                        theme: "light",
+                    })
+                } else {
+                    throw new Error(`HTTP error! Status: ${response.status}`)
+                }
             } else {
                 throw new Error(`HTTP error! Status: ${response.status}`)
             }
@@ -129,7 +108,7 @@ export default function NewPost() {
     }
     return (
         <>
-            <form onSubmit={handleSubmit}>
+            {/* <form onSubmit={handleSubmit}>
                 <div className="mb-6 text-3xl font-light text-center text-gray-800 dark:text-white">
                     Add Article
                 </div>
@@ -209,14 +188,7 @@ export default function NewPost() {
                                 required
                                 onChange={handleChange}
                             />
-                            {/* <textarea
-                                    className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
-                                    id="comment"
-                                    placeholder="Enter your comment"
-                                    name="comment"
-                                    rows="5"
-                                    cols="40"
-                                ></textarea> */}
+
                         </label>
                     </div>
                     <div className="col-span-2 text-right">
@@ -225,6 +197,202 @@ export default function NewPost() {
                             className="py-2 px-4  bg-indigo-600 hover:bg-indigo-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
                         >
                             Send
+                        </button>
+                    </div>
+                </div>
+            </form> */}
+
+            <form onSubmit={handleSubmit}>
+                <div className="w-full p-12 bg-white space-y-12">
+                    <div className="border-b border-gray-900/10 pb-12">
+                        <h2 className="text-base font-semibold leading-7 text-gray-900 text-center">
+                            Add new Post
+                        </h2>
+
+                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                            <div className="sm:col-span-3">
+                                <label
+                                    htmlFor="authorId"
+                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                    Author ID
+                                </label>
+                                <div className="mt-2">
+                                    <input
+                                        type="text"
+                                        name="authorId"
+                                        id="authorId"
+                                        autoComplete="title"
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        required
+                                        value={idAuthor}
+                                        onChange={(e) =>
+                                            setIdAuthor(e.target.value)
+                                        }
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="sm:col-span-3">
+                                <label
+                                    htmlFor="title"
+                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                    Title
+                                </label>
+                                <div className="mt-2">
+                                    <input
+                                        type="text"
+                                        name="title"
+                                        id="title"
+                                        autoComplete="title"
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        required
+                                        value={title}
+                                        onChange={(e) =>
+                                            setTitle(e.target.value)
+                                        }
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="sm:col-span-3">
+                                <label
+                                    htmlFor="category"
+                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                    Category
+                                </label>
+                                <div className="mt-2">
+                                    <select
+                                        id="category"
+                                        name="category"
+                                        autoComplete="category"
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        required
+                                        value={category}
+                                        onChange={(e) =>
+                                            setCategory(e.target.value)
+                                        }
+                                    >
+                                        <option>Mountain</option>
+                                        <option>Lead</option>
+                                        <option>Boulder</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="sm:col-span-3">
+                                <label
+                                    htmlFor="readTime"
+                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                    Read time
+                                </label>
+                                <div className="mt-2">
+                                    <select
+                                        id="readTime"
+                                        name="readTime"
+                                        autoComplete="readTime"
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:max-w-xs sm:text-sm sm:leading-6"
+                                        required
+                                        value={readTime}
+                                        onChange={(e) =>
+                                            setReadTime(e.target.value)
+                                        }
+                                    >
+                                        <option value="1 minute">1</option>
+                                        <option value="2 minute">2</option>
+                                        <option value="3 minute">3</option>
+                                        <option value="4 minute">4</option>
+                                        <option value="5 minute">5</option>
+                                        <option value="6 minute">6</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="border-b border-gray-900/10 pb-12">
+                        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                            <div className="col-span-full">
+                                <label
+                                    htmlFor="content"
+                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                    Content
+                                </label>
+                                <div className="mt-2">
+                                    <TextEditor
+                                        id="content"
+                                        name="content"
+                                        rows={3}
+                                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                                        defaultValue={""}
+                                        theme="snow"
+                                        // className="flex-1 w-full px-4 py-2 text-base text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                                        text={text}
+                                        setText={setText}
+                                        required
+                                        onChange={handleChange}
+                                    />
+                                </div>
+                            </div>
+
+                            <div className="col-span-full">
+                                <label
+                                    htmlFor="cover-photo"
+                                    className="block text-sm font-medium leading-6 text-gray-900"
+                                >
+                                    Cover photo
+                                </label>
+                                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                                    <div className="text-center">
+                                        <PhotoIcon
+                                            className="mx-auto h-12 w-12 text-gray-300"
+                                            aria-hidden="true"
+                                        />
+                                        <div className="mt-4 flex text-sm leading-6 text-gray-600">
+                                            <label
+                                                htmlFor="file-upload"
+                                                className="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500"
+                                            >
+                                                <span>Upload a file</span>
+                                                <input
+                                                    id="file-upload"
+                                                    name="file-upload"
+                                                    type="file"
+                                                    className="sr-only"
+                                                    multiple={false}
+                                                    onChange={(e) =>
+                                                        setCover(
+                                                            e.target.files[0]
+                                                        )
+                                                    }
+                                                />
+                                            </label>
+                                            <p className="pl-1">
+                                                or drag and drop
+                                            </p>
+                                        </div>
+                                        <p className="text-xs leading-5 text-gray-600">
+                                            PNG, JPG, GIF up to 10MB
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="mt-6 flex items-center justify-end gap-x-6">
+                        <button
+                            type="button"
+                            className="text-sm font-semibold leading-6 text-gray-900"
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        >
+                            Save
                         </button>
                     </div>
                 </div>
@@ -241,135 +409,6 @@ export default function NewPost() {
                 pauseOnHover={false}
                 theme="colored"
             />
-
-            {/* <dialog id="my_modal_3" className="modal">
-                <div className="modal-box max-h-fit">
-                    <form method="dialog" onSubmit={handleSubmit}>
-                        <h3 className="font-bold text-lg flex justify-center">
-                            New Post
-                        </h3>
-                        <button
-                            className="btn"
-                            onClick={() =>
-                                document.getElementById("my_modal_3").close()
-                            }
-                        >
-                            X
-                        </button>
-                        <label className="form-control w-full max-w-[100%] mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">
-                                    Author ID
-                                </span>
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="234234234234234234"
-                                className="input input-bordered w-full max-w-[100%] mb-3"
-                                required
-                                value={idAuthor}
-                                onChange={(e) => setIdAuthor(e.target.value)}
-                            />
-                        </label>
-                        <label className="form-control w-full max-w-[100%] mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">
-                                    Title
-                                </span>
-                            </div>
-                            <input
-                                type="text"
-                                placeholder="Announcing new software"
-                                className="input input-bordered w-full max-w-[100%] mb-3"
-                                required
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
-                            />
-                        </label>
-                        <label className="form-control w-full max-w-[100%] mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">
-                                    Category
-                                </span>
-                            </div>
-                            <select
-                                className="select select-bordered"
-                                required
-                                value={category}
-                                onChange={(e) => setCategory(e.target.value)}
-                            >
-                                <option>Pick one</option>
-                                <option>Software</option>
-                                <option>Job's Interviews</option>
-                                <option>AI </option>
-                                <option>Frontend</option>
-                                <option>Backend</option>
-                            </select>
-                        </label>
-                        <label className="form-control w-full max-w-[100%] mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">
-                                    Add cover
-                                </span>
-                            </div>
-                            <input
-                                type="file"
-                                className="file-input file-input-bordered w-full max-w-[100%] mb-3"
-                                multiple={false}
-                                // onChange={handleFile}
-                                onChange={(e) => setCover(e.target.files[0])}
-                            />
-                        </label>
-                        <label className="form-control w-full max-w-[100%] mb-3">
-                            <div className="label">
-                                <span className="label-text font-bold">
-                                    Read time
-                                </span>
-                            </div>
-                            <select
-                                className="select select-bordered select-xs w-full max-w-[100%] mb-3"
-                                required
-                                value={readTime}
-                                onChange={(e) => setReadTime(e.target.value)}
-                            >
-                                <option>Minute</option>
-                                <option value="1">1 minute</option>
-                                <option value="2">2 minute</option>
-                                <option value="3">3 minute</option>
-                            </select>
-                        </label>
-                        <label
-                            className={cn(
-                                "form-control w-full max-w-[100%] mb-3 ",
-                                styles.newBlogContentContainer
-                            )}
-                        >
-                            <div className="label">
-                                <span className="label-text font-bold">
-                                    Comment
-                                </span>
-                            </div>
-                            <TextEditor
-                                theme="snow"
-                                className={cn(
-                                    "max-h-24",
-                                    styles.newBlogContent
-                                )}
-                                text={text}
-                                setText={setText}
-                                required
-                                onChange={handleChange}
-                            />
-                        </label>
-                        <div className="flex justify-end my-5 ">
-                            <button className="btn btn-success " type="submit">
-                                <Link to={"/"}>Send</Link>
-                            </button>
-                        </div>
-                    </form>
-                    <ToastContainer />
-                </div>
-            </dialog> */}
         </>
     )
 }
