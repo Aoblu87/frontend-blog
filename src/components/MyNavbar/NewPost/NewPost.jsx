@@ -59,12 +59,15 @@ export default function NewPost() {
         let date = new Date().toLocaleDateString()
         console.log(date)
 
+        //Prendo uderId dal local storage
+        const userId = { _id: localStorage.getItem("userId") }
+
         const textData = {
             readTime: {
                 value: readTime,
             },
             author: {
-                _id: idAuthor,
+                _id: userId,
             },
 
             category: category,
@@ -133,7 +136,7 @@ export default function NewPost() {
                             </h2>
 
                             <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                                <div className="sm:col-span-3">
+                                {/* <div className="sm:col-span-3">
                                     <label
                                         htmlFor="authorId"
                                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -154,7 +157,7 @@ export default function NewPost() {
                                             }
                                         />
                                     </div>
-                                </div>
+                                </div> */}
 
                                 <div className="sm:col-span-3">
                                     <label
