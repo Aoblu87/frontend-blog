@@ -1,11 +1,13 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import BlogLike from "../BlogLike/BlogLike"
 import Comments from "../Comments/Comments"
+import LoadingContext from "../../contexts/LoadingContext"
 
 export default function Blog() {
     const [blog, setBlog] = useState({})
-    const [loading, setLoading] = useState(true)
+    const { loading, setLoading } = useContext(LoadingContext)
+
     const { id } = useParams()
 
     const getPost = async () => {
@@ -35,7 +37,7 @@ export default function Blog() {
         <>
             <div className="w-full p-12 bg-white">
                 {loading ? (
-                    <div className="d-flex mt-5">
+                    <div className="d-flexjustify-center mt-5">
                         <span className="loading loading-spinner text-info"></span>
                     </div>
                 ) : (

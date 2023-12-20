@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
+import LoadingContext from "../../../contexts/LoadingContext"
 
 export default function CommentList(props) {
     const { id } = props
     const [comments, setComments] = useState()
-    const [loading, setLoading] = useState(true)
+    const { loading, setLoading } = useContext(LoadingContext)
 
     const getComments = async () => {
         try {
@@ -32,7 +33,7 @@ export default function CommentList(props) {
         <>
             <div className="flex flex-col  justify-between" key={id}>
                 {loading ? (
-                    <div className="flex mt-5">
+                    <div className="flex justify-center mt-5">
                         <span className="loading loading-spinner text-info"></span>
                     </div>
                 ) : (

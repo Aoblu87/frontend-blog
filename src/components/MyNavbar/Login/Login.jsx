@@ -12,8 +12,6 @@ export default function Login(props) {
     const navigate = useNavigate()
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        // setLoading(true);
         setEmailExists(true)
 
         //imposto il tempo per la chiusura del modale sincronizzato con il toast

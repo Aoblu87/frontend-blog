@@ -33,7 +33,7 @@ export default function BlogList(props) {
     return (
         <>
             {loading ? (
-                <div className="flex mt-5">
+                <div className="flex justify-center mt-5">
                     <span className="loading loading-spinner text-info"></span>
                 </div>
             ) : result ? (
