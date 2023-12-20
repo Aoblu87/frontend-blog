@@ -12,7 +12,10 @@ export default function MyNavbar(props) {
         <>
             <div className="">
                 <nav className=" bg-white dark:bg-gray-800  shadow py-4 ">
-                    <div className="container mx-auto px-8">
+                    <div
+                        className="container mx-auto px-0
+                    "
+                    >
                         <div className="flex items-center justify-between h-16">
                             <div className=" flex items-center">
                                 <a className="flex-shrink-0" href="/">
