@@ -1,10 +1,11 @@
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import Login from "../Login/Login"
 import ConfermationEmail from "../../ConfermationEmail/ConfermationEmail"
 import { useNavigate } from "react-router-dom"
+import UserContext from "../../../contexts/userContext"
 
 export default function SignUp(props) {
-    const { user, setUser } = props
+    const { user, setUser } = useContext(UserContext)
 
     const [author, setAuthor] = useState("")
     const [firstName, setFirstName] = useState("")
@@ -18,7 +19,7 @@ export default function SignUp(props) {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        // setLoading(true);
+
         setEmailExists(false)
 
         //salvo la data in cui avviene la registrazione

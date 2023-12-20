@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import BlogList from "../BlogList/BlogList"
 import useJwt from "../../hooks/useJwt"
 import { useNavigate } from "react-router-dom"
+import UserContext from "../../contexts/userContext"
 
 export default function Main(props) {
-    const { user, setUser } = props
+    const { setUser } = useContext(UserContext)
     const [query, setQuery] = useState("")
     const [result, setResult] = useState()
 
