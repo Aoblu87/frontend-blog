@@ -53,22 +53,6 @@ export default function MyNavbar(props) {
                             </div>
 
                             <div className="flex items-center justify-end w-65">
-                                <div className="flex mx-2">
-                                    <button
-                                        type="button"
-                                        className="py-2 px-4  bg-red-600 hover:bg-red-700 focus:ring-red-500 focus:ring-offset-red-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  opacity-70  rounded-lg "
-                                        onClick={() =>
-                                            document
-                                                .getElementById(
-                                                    "addArticleDialog"
-                                                )
-                                                .showModal()
-                                        }
-                                    >
-                                        {" "}
-                                        Add Post
-                                    </button>
-                                </div>
                                 <dialog
                                     id="addArticleDialog"
                                     className="w-full max-w-2xl px-5 py-10 m-auto mt-10 bg-white rounded-lg shadow dark:bg-gray-800"
@@ -123,9 +107,9 @@ export default function MyNavbar(props) {
                                                                 }}
                                                             >
                                                                 <svg
-                                                                    width="20"
+                                                                    width="30"
                                                                     fill="currentColor"
-                                                                    height="20"
+                                                                    height="30"
                                                                     className="text-gray-800"
                                                                     viewBox="0 0 1792 1792"
                                                                     xmlns="http://www.w3.org/2000/svg"
@@ -147,68 +131,47 @@ export default function MyNavbar(props) {
                                                                 aria-orientation="vertical"
                                                                 aria-labelledby="options-menu"
                                                             >
-                                                                <a
-                                                                    href="#"
-                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                                                                    role="menuitem"
+                                                                <button
+                                                                    className="w-full block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                                                                    onClick={() => {
+                                                                        !selected
+                                                                            ? setSelected(
+                                                                                  true
+                                                                              )
+                                                                            : setSelected(
+                                                                                  false
+                                                                              )
+                                                                    }}
                                                                 >
-                                                                    <span className="flex flex-col">
-                                                                        <span>
-                                                                            Settings
-                                                                        </span>
-                                                                    </span>
-                                                                </a>
-                                                                <a
-                                                                    href="#"
-                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                                                                    role="menuitem"
-                                                                >
-                                                                    <span className="flex flex-col">
-                                                                        <span>
-                                                                            Account
-                                                                        </span>
-                                                                    </span>
-                                                                </a>
-                                                                <Link
-                                                                    to={
-                                                                        "/profile"
-                                                                    }
-                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
-                                                                >
-                                                                    <button
-                                                                        onClick={() => {
-                                                                            !selected
-                                                                                ? setSelected(
-                                                                                      true
-                                                                                  )
-                                                                                : setSelected(
-                                                                                      false
-                                                                                  )
-                                                                        }}
+                                                                    <Link
+                                                                        to={
+                                                                            "/profile"
+                                                                        }
+                                                                        className=" "
                                                                     >
                                                                         <span className="flex flex-col">
                                                                             <span>
                                                                                 Profile{" "}
                                                                             </span>
                                                                         </span>
-                                                                    </button>
-                                                                </Link>
-                                                                <Link
-                                                                    to={
-                                                                        "/newPost"
-                                                                    }
-                                                                    className="block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
+                                                                    </Link>
+                                                                </button>
+                                                                <button
+                                                                    onClick={() => {
+                                                                        !selected
+                                                                            ? setSelected(
+                                                                                  true
+                                                                              )
+                                                                            : setSelected(
+                                                                                  false
+                                                                              )
+                                                                    }}
+                                                                    className="w-full  block px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
                                                                 >
-                                                                    <button
-                                                                        onClick={() => {
-                                                                            !selected
-                                                                                ? setSelected(
-                                                                                      true
-                                                                                  )
-                                                                                : setSelected(
-                                                                                      false
-                                                                                  )
-                                                                        }}
+                                                                    <Link
+                                                                        to={
+                                                                            "/newPost"
+                                                                        }
                                                                     >
                                                                         <span className="flex flex-col">
                                                                             <span>
@@ -216,8 +179,8 @@ export default function MyNavbar(props) {
                                                                                 Post{" "}
                                                                             </span>
                                                                         </span>
-                                                                    </button>
-                                                                </Link>
+                                                                    </Link>
+                                                                </button>
                                                                 <a
                                                                     href="#"
                                                                     className="block  px-4 py-2 text-md text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-100 dark:hover:text-white dark:hover:bg-gray-600"
